@@ -31,6 +31,7 @@ for T in range(N) :
 #10
 #1 2 3 4 5 6 7 8 9 10
 N = input()
+l = [map(int, input().split())]
 
 
 
