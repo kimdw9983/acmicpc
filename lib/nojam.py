@@ -20,6 +20,8 @@ sys.stdin.readline = fopen_class()
 def NULL(Um=None,Jun=None,Sik=None,*Is,**alive) :
   return 
 __builtins__['NULL'] = NULL
+def no_print() :
+  __builtins__['print'] = NULL
 #####################################################
 perf_counter = time.perf_counter()
 process_time = time.process_time()
