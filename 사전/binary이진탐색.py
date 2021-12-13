@@ -16,21 +16,21 @@ def decision(param): #결정 함수
   pass
     
 #high : 구간 최대값 + 1
-def parametric_search_find_highest(lo,hi): 
-  while lo + 1 < hi:
-    mid = (lo + hi) // 2
+def parametric_search_find_highest(low,high): 
+  while low + 1 < high:
+    mid = (low + high) // 2
     if decision(mid):
-      lo = mid #최소값 구할땐 hi = mid
+      low = mid
     else:
-      hi = mid #vise versa
-  return lo #최소값 구할땐 hi
+      high = mid
+  return low
 
 #low : 구간 최소값 - 1
-def parametric_search_find_lowest(lo,hi): 
-  while lo + 1 < hi:
-    mid = (lo + hi) // 2
+def parametric_search_find_lowest(low,high): 
+  while low + 1 < high:
+    mid = (low + high) // 2
     if decision(mid):
-      hi = mid #최소값 구할땐 hi = mid
+      high = mid
     else:
-      lo = mid #vise versa
-  return hi #최소값 구할땐 hi
+      low = mid
+  return high

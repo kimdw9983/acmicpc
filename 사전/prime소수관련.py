@@ -14,15 +14,15 @@ def is_prime(n):
 
 def eratosthenes(n):
   #https://www.geeksforgeeks.org/python-program-for-sieve-of-eratosthenes/
-    prime = [False] * 2 + [True for i in range(n - 1)]
+  prime = [False] * 2 + [True for i in range(n - 1)]
 
-    p = 2
-    while (p * p <= n):
-      if prime[p] :
-        for i in range(p ** 2, n + 1, p):
-          prime[i] = False
-      p += 1
+  p = 2
+  while (p * p <= n):
+    if prime[p] :
+      for i in range(p ** 2, n + 1, p):
+        prime[i] = False
+    p += 1
 
-    for i, v in enumerate(prime) :
-      if v :
-        print(i)
+  for i, v in enumerate(prime) :
+    if v :
+      print(i)

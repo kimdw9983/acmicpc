@@ -4,12 +4,14 @@ import datetime
 
 class fopen_class :
   def __init__(self) :
-    self.f = open("input").readlines()
-    self.iter = iter(self.f)
+    self.f = open("input")
+    #self.f = open("input").readlines()
+    #self.iter = iter(self.f)
 
-  def __call__(self, junk = None) :
+  def __call__(self, *junk) :
     try :
-      return self.iter.__next__().strip()
+      return self.f.readline()
+      #return self.iter.__next__()
     except StopIteration :
       None
 

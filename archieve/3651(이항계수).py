@@ -5,7 +5,7 @@ def C(n, k) : #nCk
   sum = 1
   for i in range(k) :
     sum *= (n-i)
-  return int(sum/math.factorial(k))
+  return sum//math.factorial(k)
 
 def approx(m, n) : #C(n, k)의 유사값을 구하기 위한 역함수이다.
   #C(n, k) = (n-k)(n-k+1)(n-k+2)...n / k! = M(문제의 입력)
