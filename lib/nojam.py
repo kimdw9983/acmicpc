@@ -2,22 +2,27 @@ import sys
 import time
 import datetime
 
-class fopen_class :
+f = open("input") #파일의 iterator를 공유한다.
+
+class hack_open :
   def __init__(self) :
-    self.f = open("input")
-    #self.f = open("input").readlines()
-    #self.iter = iter(self.f)
+    self.iter = iter(f)
 
   def __call__(self, *junk) :
     try :
-      return self.f.readline()
-      #return self.iter.__next__()
+      return self.iter.__next__()
     except StopIteration :
       None
 
-__builtins__['input'] = fopen_class()
-sys.stdin.readline = fopen_class()
-#__builtins__['open'] = fopen_class()
+class hack_input(hack_open) :
+  def __call__(self, *junk) :
+    try :
+      return self.iter.__next__()[:-1] #줄바꿈문자 제거
+    except StopIteration :
+      None
+
+sys.stdin.readline = hack_open()
+__builtins__['input'] = hack_input()
 #####################################################
 def NULL(Um=None,Jun=None,Sik=None,*Is,**alive) :
   return 
