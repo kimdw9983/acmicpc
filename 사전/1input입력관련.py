@@ -1,7 +1,9 @@
-N = int(input())
+import sys
+
+N = int(sys.stdin.readline())
 
 
-M, N = map(int, input().split())
+M, N = map(int, sys.stdin.readline().split())
 
 
 #N
@@ -10,9 +12,9 @@ M, N = map(int, input().split())
 #3 
 #...
 #N
-N = int(input())
+N = int(sys.stdin.readline())
 for T in range(N) :
-  X = int(input())
+  X = int(sys.stdin.readline())
 
 
 
@@ -22,9 +24,9 @@ for T in range(N) :
 #3 
 #...
 #N
-N, K = map(int, input().split())
+N, K = map(int, sys.stdin.readline().split())
 for T in range(N) :
-  X = int(input())
+  X = int(sys.stdin.readline())
 
 
 
@@ -33,21 +35,20 @@ for T in range(N) :
 #2 3
 #3 7
 #N 5
-N = int(input())
+N = int(sys.stdin.readline())
 for T in range(N) :
-  X, Y = map(int, input().split())
+  X, Y = map(int, sys.stdin.readline().split())
 
 
 
 #N
 #1 2 3 4 5 6 7 8 9 10
-N = int(input())
-l = map(int, input().split())
+N = int(sys.stdin.readline())
+l = map(int, sys.stdin.readline().split())
 
 
 
 
-import sys
 N = sys.stdin.readline()
 M = sys.stdin.readline().rstrip().split()
 

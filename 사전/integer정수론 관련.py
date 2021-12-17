@@ -4,3 +4,7 @@ def gcd(m,n):
     (m,n) = (n,t)
   return abs(m)
 #최소공배수 = ab/gcd(a,b)
+
+import math
+math.factorial() 
+#팩토리얼

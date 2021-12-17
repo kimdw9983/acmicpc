@@ -17,10 +17,11 @@ class hack_open :
 class hack_input(hack_open) :
   def __call__(self, *junk) :
     try :
-      return self.iter.__next__()[:-1] #줄바꿈문자 제거
+      return self.iter.__next__()#[:-1] #줄바꿈문자 제거
     except StopIteration :
       None
 
+__builtins__['f'] = f
 sys.stdin.readline = hack_open()
 __builtins__['input'] = hack_input()
 #####################################################

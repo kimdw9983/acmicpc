@@ -5,3 +5,6 @@ print(*l, sep="")
 print('\n'.join(map(str, l)))
 print(*l, sep="\n")
 #한줄씩 출력
+
+print = sys.stdout.write
+#빠른 출력
