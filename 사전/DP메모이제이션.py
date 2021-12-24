@@ -1,20 +1,22 @@
 DATA = dict()
 
 N = int(input())
-for n in range(N) :
-  for i, v in enumerate(map(int, input().split())) : 
-    DATA[n, i] = v
+for n in range(N):
+    for i, v in enumerate(map(int, input().split())):
+        DATA[n, i] = v
 
 memo = dict()
-for i in range(3) : #초기값
-  memo[0, i] = DATA[0, i]
+for i in range(3):  #초기값
+    memo[0, i] = DATA[0, i]
 
-def DP(*key) :
-  if key in memo :
-    return memo[key]
-  else :
-    memo[key] = 0#재귀 관계식
-    return memo[key]
+
+def DP(*key):
+    if key in memo:
+        return memo[key]
+    else:
+        memo[key] = 0  #재귀 관계식
+        return memo[key]
+
 
 """
 ※ 동적 계획법(DP) 기반의 알고리즘 동작 방식 

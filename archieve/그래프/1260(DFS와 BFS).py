@@ -32,7 +32,7 @@ def BFS(start) :
   while queue:
     v = queue.pop()
     visited.append(v)
-    for i in reversed(graph[v]): #deque를 불러와서 쓰기보다 list를 거꾸로 순회하는게 효율적이다.
+    for i in graph[v][::-1]: #deque를 불러와서 쓰기보다 list를 거꾸로 순회하는게 효율적이다.
       if not check[i]:
         check[i] = True
         queue = [i] + queue

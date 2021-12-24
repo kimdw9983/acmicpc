@@ -1,8 +1,5 @@
-3 4
-ohhenrie
-charlie
-baesangwook
-obama
-baesangwook
-ohhenrie
-clinton
+n = 1
+
+n&1 #홀수인지?
+(n&(~(n-1)))==n #2의 제곱수인지? (2, 4, 8, 16, 32, ...)
+(n^(1<<n.bit_length()-1))#첫번째 비트 제거(10100 -> 0100)

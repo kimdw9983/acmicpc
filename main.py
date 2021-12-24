@@ -1,3 +1,4 @@
+print(" ",flush=True)
 from lib.nojam import *
 from importlib import reload
 
