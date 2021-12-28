@@ -1,4 +1,3 @@
-#https://youtu.be/Uzgz4c7SzBw
 def bin_recur(n, k):  #재귀적 풀이
     if (k == 0 or n == k):
         return 1
@@ -29,9 +28,6 @@ def bin(n, k):  #메모리 최적화
             j -= 1
     return B[k]
 
-
-MAX = 20
-for n in range(MAX):
-    for k in range(n + 1):
-        print(bin(n, k), end=" ")
-    print()
+N = int(input())
+K = int(input())
+print(bin(N, K))

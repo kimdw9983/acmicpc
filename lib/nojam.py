@@ -24,6 +24,7 @@ class hack_input(hack_open) :
 __builtins__['f'] = f
 sys.stdin.readline = hack_open()
 __builtins__['input'] = hack_input()
+__builtins__['debug'] = __builtins__['print']
 #####################################################
 def NULL(Um=None,Jun=None,Sik=None,*Is,**alive) :
   return 
@@ -164,3 +165,8 @@ __builtins__['is_prime'] = is_prime
 __builtins__['lcm'] = lcm
 __builtins__['gcd'] = math.gcd
 __builtins__['divisors'] = divisors
+#########################################################
+def stop() :
+    assert False, "멈춰!!"
+
+__builtins__['멈춰'] = stop

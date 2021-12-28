@@ -5,6 +5,7 @@ for n in range(N):
     for i, v in enumerate(map(int, input().split())):
         DATA[n, i] = v
 
+
 memo = dict()
 for i in range(3):  #초기값
     memo[0, i] = DATA[0, i]

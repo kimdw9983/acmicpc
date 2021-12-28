@@ -1,3 +1,26 @@
+N, r, c = map(int, input().split())
+
+l = [[0] * 2**N for n in range(2**N)] 
+cnt = 0
+def Z(x, y, n) :
+    global cnt
+    if n == 1 :
+        l[x][y] = cnt
+        l[x][y+1] = cnt+1
+        l[x+1][y] = cnt+2
+        l[x+1][y+1] = cnt+3
+        cnt += 4
+    else :
+        DIV = 2**n//2
+        Z(x, y, n-1)
+        Z(x, y+DIV, n-1)
+        Z(x+DIV, y, n-1)
+        Z(x+DIV, y+DIV, n-1)
+
+Z(0, 0, N)
+#print(*l, sep="\n")
+print(l[r][c])
+###########################################################
 import sys
 N, r, c = map(int, sys.stdin.readline().split())
 

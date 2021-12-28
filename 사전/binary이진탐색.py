@@ -16,7 +16,6 @@ def binary_search(arr, x: int):  #data는 정렬돼있어야 함
 def decision(param):  #결정 함수
     pass
 
-
 #high : 구간 최대값 + 1
 def parametric_search_find_highest(low, high):
     while low + 1 < high:
@@ -26,7 +25,6 @@ def parametric_search_find_highest(low, high):
         else:
             high = mid
     return low
-
 
 #low : 구간 최소값 - 1
 def parametric_search_find_lowest(low, high):
