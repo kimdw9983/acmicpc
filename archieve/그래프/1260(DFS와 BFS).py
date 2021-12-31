@@ -14,7 +14,7 @@ for edge in graph:
     edge.sort(reverse=True)
 
 
-def DFS(start):
+def DFS(start): #벡터형 그래프에서 사용
     visited = []
     stack = [start]
     check = [False for _ in range(N + 1)]
@@ -27,7 +27,7 @@ def DFS(start):
     return visited
 
 
-def BFS(start):
+def BFS(start): #벡터형 그래프에서 사용
     visited = []
     queue = [start]
     check = [False for _ in range(N + 1)]
@@ -42,4 +42,7 @@ def BFS(start):
     return visited
 
 
+#visited 출력
 sys.stdout.write(" ".join(map(str, DFS(S))) + "\n" + " ".join(map(str, BFS(S))))
+
+

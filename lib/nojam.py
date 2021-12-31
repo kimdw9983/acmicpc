@@ -1,6 +1,4 @@
-import sys
-import time
-import datetime
+import sys, time, datetime, pprint
 
 f = open("input") #파일의 iterator를 공유한다.
 
@@ -170,3 +168,10 @@ def stop() :
     assert False, "멈춰!!"
 
 __builtins__['멈춰'] = stop
+#########################################################
+def _pgraph(graph) :
+    print("[")
+    for i, v in enumerate(graph) :
+        print(str(i) + " : ", v)
+    print("]")
+__builtins__['pgraph'] = _pgraph

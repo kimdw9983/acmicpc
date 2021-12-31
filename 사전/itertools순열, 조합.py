@@ -10,7 +10,7 @@ w = itertools.permutations(alphabet)
 w = itertools.product(alphabet, repeat=2) #abc중에서 2개를 뽑는다
 #aa, ab, ac, ba, bb, bc, ca, cb, cc
 
-###순서 상관이 있는게 더 많음!!
+###순서 상관이 있는게(위에있는게) 더 많음!!
 
 #nCr(조합) - 순서 상관없고, 중복 없을때
 w = itertools.combinations(alphabet, 2)

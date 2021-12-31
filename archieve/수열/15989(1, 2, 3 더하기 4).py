@@ -6,3 +6,4 @@ for i in range(1,4) :
 for T in range(int(input())) :
     print(dp[int(input())])
 #정답수열 OEIS A001399
+#https://www.acmicpc.net/source/36393367

@@ -52,3 +52,7 @@ import sys
 
 N, M = map(int, sys.stdin.readline().split())
 grid = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+
+
+#그리드 입력
+grid = [input().rstrip() for i in range(N)]

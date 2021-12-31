@@ -1,24 +1,25 @@
 import sys
-N = int(sys.stdin.readline().rstrip())
-S = []
+from collections import deque
+input = sys.stdin.readline
+print = sys.stdout.write
+N = int(input().rstrip())
+S = deque()
 for T in range(N) :
-  command = sys.stdin.readline().rstrip()
+    command = input().rstrip()
 
-  if command == "front" :
-    print(S[0] if len(S) else -1)
-  elif command == "back" :
-    print(S[-1] if len(S) else -1)
-  elif command == "size" :
-    print(len(S))
-  elif command == "empty" :
-    print(0 if len(S) else 1)
-  elif command == "pop" : #get
-    if len(S) :
-      popped = S[0]
-      del S[0]
-      print(popped)
-    else :
-      print(-1)
-  elif "push" in command : #put
-    x = command.split()[1]
-    S.append(x)
+    if command == "front" :
+        print(str(S[0])+"\n" if len(S) else "-1\n")
+    elif command == "back" :
+        print(str(S[-1])+"\n" if len(S) else "-1\n")
+    elif command == "size" :
+        print(str(len(S))+"\n")
+    elif command == "empty" :
+        print("0\n" if len(S) else "1\n")
+    elif command == "pop" : #get
+        if len(S) :
+            print(str(S.popleft())+"\n")
+        else :
+            print("-1\n")
+    else : #put
+        x = command[5:]
+        S.append(x)

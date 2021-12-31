@@ -73,3 +73,6 @@ def bin(n, k):
             B[j] = B[j] + B[j-1]
             j -= 1
     return B[k]
+
+#A^B%C를 효율적으로 처리.
+pow(a,b,c)

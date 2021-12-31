@@ -62,18 +62,18 @@ for _ in range(T) :
 
                 stack = [(i, j)]
                 while stack :
-                    x, y = stack.pop() #x(세로), y(가로) : DFS용 index
-                    graph[x][y] = False
+                    r, c = stack.pop() #r(세로), c(가로) : DFS용 index
+                    graph[r][c] = False
 
                     next = []
-                    if y+1 < M and graph[x][y+1] :
-                        next.append((x, y+1))
-                    if x+1 < N and graph[x+1][y] :
-                        next.append((x+1, y))
-                    if y > 0 and graph[x][y-1] :
-                        next.append((x, y-1))
-                    if x > 0 and graph[x-1][y] :
-                        next.append((x-1, y))
+                    if c+1 < M and graph[r][c+1] :
+                        next.append((r, c+1))
+                    if r+1 < N and graph[r+1][c] :
+                        next.append((r+1, c))
+                    if c > 0 and graph[r][c-1] :
+                        next.append((r, c-1))
+                    if r > 0 and graph[r-1][c] :
+                        next.append((r-1, c))
                     
                     if next :
                         stack += next
