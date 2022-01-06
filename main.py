@@ -10,3 +10,5 @@ def next_case() :
   reload(test)
 
 import test
+#f.seek(0)
+import test2

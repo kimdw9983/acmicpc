@@ -15,7 +15,7 @@ class hack_open :
 class hack_input(hack_open) :
   def __call__(self, *junk) :
     try :
-      return self.iter.__next__()#[:-1] #줄바꿈문자 제거
+      return self.iter.__next__().rstrip() #줄바꿈문자 제거
     except StopIteration :
       None
 
@@ -169,9 +169,14 @@ def stop() :
 
 __builtins__['멈춰'] = stop
 #########################################################
+KEYWORD = [1234567891] #-로 표시할만한 거
 def _pgraph(graph) :
-    print("[")
-    for i, v in enumerate(graph) :
-        print(str(i) + " : ", v)
-    print("]")
+    for i, l in enumerate(graph) :
+        #print(str(i) + " : ", v)
+        print(f"{i:2}: [", end="")
+        for v in l :
+            print(f"{' -' if v in KEYWORD else v:2}", end=" ")
+        print("]")
+    print()
+
 __builtins__['pgraph'] = _pgraph

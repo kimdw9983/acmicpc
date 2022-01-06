@@ -17,7 +17,7 @@ def DFS(graph, start):
             check[v] = True  #들어갔음을 확인
             stack += graph[v]  #해당 노드에 연결된 간선 추가
 
-def DFS(start):
+def DFS_graph(start):
     q = [start]
     while q:
         v = q.pop()
@@ -28,13 +28,13 @@ def DFS(start):
 
 
 def BFS(graph, start):
-    queue = [start]
+    queue = [start]#collections.deque([start])
     check = [False for _ in range(NUM_NODES + 1)]
     check[start] = True
 
     while queue:
         v = queue.pop()
-        for i in reversed(graph[v]):  #deque를 불러와서 쓰기보다 list를 거꾸로 순회하는게 효율적이다.
+        for i in reversed(graph[v]): 
             if not check[i]:
                 check[i] = True
                 queue = [i] + queue
