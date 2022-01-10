@@ -63,16 +63,33 @@ def eratosthenes(n):
 
 #이항 계수(binomial coefficient)
 def bin(n, k):
-    if (k > n//2) : #이항계수의 성질
-        k = n-k
-    B = [0] * (k+1)
-    B[0] = 1
-    for i in range(1, n+1):
-        j = min(i, k)
-        while (j > 0):
-            B[j] = B[j] + B[j-1]
-            j -= 1
-    return B[k]
+	if (k > n//2) : #이항계수의 성질
+		k = n-k
+	B = [0] * (k+1)
+	B[0] = 1
+	for i in range(1, n+1):
+		j = min(i, k)
+		while (j > 0):
+			B[j] = B[j] + B[j-1]
+			j -= 1
+	return B[k]
 
 #A^B%C를 효율적으로 처리.
 pow(a,b,c)
+
+#분할 정복을 이용한 거듭제곱
+dp = [0000] #초기값 넣기
+B = 1234
+for b in range(B.bit_length()) : #b = bit
+	x = dp[-1]
+	dp.append(x * x) #제곱한걸 넣는다
+	if B&(1<<b) : 
+		pass
+B % 1234567891 #대충 마무리 작업
+
+#쓸만한 소수
+1234567891
+1999
+4447
+5167
+142857 #중국인의 나머지 정리

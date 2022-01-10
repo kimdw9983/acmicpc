@@ -131,7 +131,7 @@ __builtins__['max_memory'] = limit_memory
 """
 ##################################################
 import math
-def is_prime(n):
+def _is_prime(n):
     #https://stackoverflow.com/questions/15285534/isprime-function-for-python-language
     if n == 2 or n == 3: return True
     if n < 2 or n % 2 == 0: return False
@@ -144,6 +144,8 @@ def is_prime(n):
         if n % (f + 2) == 0: return False
         f += 6
     return True
+def is_prime(n) :
+	print(f"{n}은 소수{'이다' if _is_prime(n) else '가 아니다'}")
 
 #최소공배수
 def lcm(m, n) :
