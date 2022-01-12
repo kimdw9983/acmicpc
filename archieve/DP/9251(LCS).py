@@ -1,16 +1,23 @@
-X, Y = input(), input()
-length = len(Y)
-DP = [0] * length
+import sys
+input = sys.stdin.readline
+X = input().rstrip()
+Y = input().rstrip()
 
-for i in range(len(X)):
-  cnt = 0
-  for j in range(length):
-    if cnt < DP[j]:
-      cnt = DP[j]
-    elif X[i] == Y[j]:
-      DP[j] = cnt + 1
+def answer(X, Y) :
+	DP = [0] * 1000
 
-print(max(DP))
+	for i, x in enumerate(X):
+		cnt = 0
+		for j, y in enumerate(Y):
+			if cnt < DP[j]:
+				cnt = DP[j]
+			elif x == y:
+				DP[j] = cnt + 1
+	
+	return max(DP)
+
+print(answer(X, Y))
+
 """
 ABKPCAB
 BACABCA

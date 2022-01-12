@@ -17,48 +17,45 @@ math.factorial()
 
 #n의 모든 약수 출력 O(n^.5)
 def divisors(n : int) :
-    if not n :
-        return [0]
-    l = []
-    for i in range(1, math.isqrt(n) + 1): 
-        if not n % i:            
-            l.append(i)
-            l.append(n//i)
-    return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
+	if not n :
+		return [0]
+	l = []
+	for i in range(1, math.isqrt(n) + 1): 
+		if not n % i:            
+			l.append(i)
+			l.append(n//i)
+	return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
 
 
 #소수인지 판단
 #https://stackoverflow.com/questions/15285534/isprime-function-for-python-language
 import math
 def is_prime(n):
-    if n == 2 or n == 3: return True
-    if n < 2 or n % 2 == 0: return False
-    if n < 9: return True
-    if n % 3 == 0: return False
-    r = math.isqrt(n)
-    f = 5
-    while f <= r:
-        if n % f == 0: return False
-        if n % (f + 2) == 0: return False
-        f += 6
-    return True
+	if n == 2 or n == 3: return True
+	if n < 2 or n % 2 == 0: return False
+	if n < 9: return True
+	if n % 3 == 0: return False
+	r = math.isqrt(n)
+	f = 5
+	while f <= r:
+		if n % f == 0: return False
+		if n % (f + 2) == 0: return False
+		f += 6
+	return True
 
 
 #에라토스테네스의 체
 #https://www.geeksforgeeks.org/python-program-for-sieve-of-eratosthenes/
 def eratosthenes(n):
-    prime = [False] * 2 + [True for i in range(n - 1)]
+	prime = [False] * 2 + [True for i in range(n - 1)]
+	p = 2
+	while (p * p <= n):
+		if prime[p]:
+			for i in range(p**2, n + 1, p):
+				prime[i] = False
+		p += 1
 
-    p = 2
-    while (p * p <= n):
-        if prime[p]:
-            for i in range(p**2, n + 1, p):
-                prime[i] = False
-        p += 1
-
-    for i, v in enumerate(prime):
-        if v:
-            print(i)
+	return prime
 
 
 #이항 계수(binomial coefficient)
@@ -74,8 +71,10 @@ def bin(n, k):
 			j -= 1
 	return B[k]
 
+
 #A^B%C를 효율적으로 처리.
 pow(a,b,c)
+
 
 #분할 정복을 이용한 거듭제곱
 dp = [0000] #초기값 넣기
@@ -87,9 +86,37 @@ for b in range(B.bit_length()) : #b = bit
 		pass
 B % 1234567891 #대충 마무리 작업
 
+
 #쓸만한 소수
 1234567891
 1999
 4447
 5167
-142857 #중국인의 나머지 정리
+142857
+
+
+#밀러-라빈 소수 판정법
+#n이 '소수인것 같으면' true를 반환.
+def miller(n, a) : 
+	if not a % n : return True
+	k = n-1
+	while True :
+		tmp = pow(a,k,n)
+		if tmp == n-1 : return True
+		if k%2 : return tmp == 1 or tmp == n-1
+		k //= 2
+#n < 4,759,123,141 일 경우
+def is_prime32(a) : 
+	result = True
+	for n in (2,7,61) :
+		result &= miller(a, n)
+		if not result : break
+	return result
+
+#n < 2^64(출처 몰?루) 일 경우
+def is_prime64(a) :
+	result = True
+	for n in (2,3,5,7,11,13,17,19,23,29,31,37) :
+		result &= miller(a, n)
+		if not result : break
+	return result
