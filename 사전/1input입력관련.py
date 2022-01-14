@@ -13,7 +13,7 @@ M, N = map(int, sys.stdin.readline().split())
 #N
 N = int(sys.stdin.readline())
 for T in range(N):
-    X = int(sys.stdin.readline())
+		X = int(sys.stdin.readline())
 
 #N K
 #1
@@ -23,7 +23,7 @@ for T in range(N):
 #N
 N, K = map(int, sys.stdin.readline().split())
 for T in range(N):
-    X = int(sys.stdin.readline())
+		X = int(sys.stdin.readline())
 
 #N
 #1 2
@@ -32,7 +32,7 @@ for T in range(N):
 #N 5
 N = int(sys.stdin.readline())
 for T in range(N):
-    X, Y = map(int, sys.stdin.readline().split())
+		X, Y = map(int, sys.stdin.readline().split())
 
 #N
 #1 2 3 4 5 6 7 8 9 10

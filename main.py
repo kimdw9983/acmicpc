@@ -6,8 +6,8 @@ from importlib import reload
 #reload(test)
 
 def next_case() :
-  f.seek(0)
-  reload(test)
+	f.seek(0)
+	reload(test)
 
 import test
 f.seek(0)

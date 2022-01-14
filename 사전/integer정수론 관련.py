@@ -7,7 +7,7 @@ math.gcd()
 #최소공배수
 import math
 def lcm(m, n) :
-    return m*n//math.gcd(m,n)
+		return m*n//math.gcd(m,n)
 
 
 #팩토리얼
@@ -21,7 +21,7 @@ def divisors(n : int) :
 		return [0]
 	l = []
 	for i in range(1, math.isqrt(n) + 1): 
-		if not n % i:            
+		if not n % i:						
 			l.append(i)
 			l.append(n//i)
 	return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]

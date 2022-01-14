@@ -1,6 +1,6 @@
 import sys
 input = sys.stdin.readline
-N =  int(input())
+N =	int(input())
 L = [*map(int, input().split())]
 
 if L[0] > 0 :
@@ -37,7 +37,7 @@ else :
 	
 import sys
 input = sys.stdin.readline
-N =  int(input())
+N =	int(input())
 L = sorted([*map(int, input().split())])
 
 s = 0 

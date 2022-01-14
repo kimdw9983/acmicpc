@@ -1,6 +1,6 @@
 import sys
 input = sys.stdin.readline
-N =  int(input())
+N =	int(input())
 L = sorted([*map(int, input().split())])
 
 x = 2**64+1 #절댓값 최소
