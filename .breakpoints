@@ -1,10 +1,26 @@
 {
   "files": {
+    "archieve/트릭/2164(카드2).py": [
+      {
+        "id": "043732dd-7626-4817-ae27-f9d6bdb8d106",
+        "line": 2,
+        "version": 1,
+        "index": 17
+      }
+    ],
     "test.py": [
       {
-        "id": "fa1684a6-e35f-45ed-a9ad-83090ea9085d",
+        "id": "32bce1af-c403-4106-8c8a-cce5fc92b44b",
         "line": 1,
-        "version": 98056,
+        "version": 104520,
+        "index": 0
+      }
+    ],
+    "test2.py": [
+      {
+        "id": "514dee0a-0f08-4037-95cb-9dc4d043552f",
+        "line": 1,
+        "version": 449,
         "index": 0
       }
     ]

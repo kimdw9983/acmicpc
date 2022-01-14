@@ -43,6 +43,8 @@ def BFS(graph, start):
 M, N = 2, 3
 graph = [[0] * M for i in range(N)]
 
+#미로찾기 N이 세로여야하고, M이 가로여야 함.
+#r이 세로, c가 가로
 def ripe(pos):
     r, c = pos
 

@@ -11,7 +11,6 @@ def miller(n, a) :
 		k //= 2
 
 def is_prime32(a) : 
-	if not a%2 : return False
 	for n in (2,7,61) :
 		if not miller(a, n) : return False
 	return True

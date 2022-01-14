@@ -107,11 +107,9 @@ def miller(n, a) :
 		k //= 2
 #n < 4,759,123,141 일 경우
 def is_prime32(a) : 
-	result = True
 	for n in (2,7,61) :
-		result &= miller(a, n)
-		if not result : break
-	return result
+		if not miller(a, n) : return False
+	return True
 
 #n < 2^64(출처 몰?루) 일 경우
 def is_prime64(a) :
