@@ -8,19 +8,11 @@
         "index": 17
       }
     ],
-    "test.py": [
-      {
-        "id": "32bce1af-c403-4106-8c8a-cce5fc92b44b",
-        "line": 1,
-        "version": 104520,
-        "index": 0
-      }
-    ],
     "test2.py": [
       {
         "id": "514dee0a-0f08-4037-95cb-9dc4d043552f",
         "line": 1,
-        "version": 449,
+        "version": 498,
         "index": 0
       }
     ]

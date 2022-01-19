@@ -56,7 +56,15 @@ def eratosthenes(n):
 		p += 1
 
 	return prime
-
+#숫자list로 출력
+import math
+def eratosthenes_2(n):
+	if n < 2: return []
+	n += 1
+	P = [1] * (n//2)
+	for i in range(3, math.isqrt(n) + 1, 2):
+		if P[i//2]: P[i**2//2::i] = [0]*((n-i**2-1)//(2*i) + 1)
+	return [2] + [2*i+1 for i in range(1, n//2) if P[i]]
 
 #이항 계수(binomial coefficient)
 def bin(n, k):

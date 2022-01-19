@@ -26,3 +26,7 @@ w = itertools.combinations_with_replacement(alphabet,3)
 #aaa, aab, aac, abb, abc, acc, bbb, bbc, bcc, ccc
 
 print(*list(map("".join, w)), sep=", ")
+
+C = [False, False, True, True, False, True]
+#값이 True인 인덱스들을 리스트로 출력
+[*itertools.compress(range(len(C)), C)] 

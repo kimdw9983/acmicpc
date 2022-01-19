@@ -132,34 +132,34 @@ __builtins__['max_memory'] = limit_memory
 ##################################################
 import math
 def _is_prime(n):
-		#https://stackoverflow.com/questions/15285534/isprime-function-for-python-language
-		if n == 2 or n == 3: return True
-		if n < 2 or n % 2 == 0: return False
-		if n < 9: return True
-		if n % 3 == 0: return False
-		r = math.isqrt(n)
-		f = 5
-		while f <= r:
-				if n % f == 0: return False
-				if n % (f + 2) == 0: return False
-				f += 6
-		return True
+	#https://stackoverflow.com/questions/15285534/isprime-function-for-python-language
+	if n == 2 or n == 3: return True
+	if n < 2 or n % 2 == 0: return False
+	if n < 9: return True
+	if n % 3 == 0: return False
+	r = math.isqrt(n)
+	f = 5
+	while f <= r:
+		if n % f == 0: return False
+		if n % (f + 2) == 0: return False
+		f += 6
+	return True
 def is_prime(n) :
 	print(f"{n}은 소수{'이다' if _is_prime(n) else '가 아니다'}")
 
 #최소공배수
 def lcm(m, n) :
-		return m*n//math.gcd(m,n)
+	return m*n//math.gcd(m,n)
 
 def divisors(n : int) : #n의 모든 약수 출력 O(n^.5)
-		if not n :
-				return [0]
-		l = []
-		for i in range(1, math.isqrt(n) + 1): 
-				if not n % i:						
-						l.append(i)
-						l.append(n//i)
-		return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
+	if not n :
+		return [0]
+	l = []
+	for i in range(1, math.isqrt(n) + 1): 
+		if not n % i:						
+			l.append(i)
+			l.append(n//i)
+	return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
 
 __builtins__['is_prime'] = is_prime
 __builtins__['lcm'] = lcm
@@ -167,18 +167,18 @@ __builtins__['gcd'] = math.gcd
 __builtins__['divisors'] = divisors
 #########################################################
 def stop() :
-		assert False, "멈춰!!"
+	assert False, "멈춰!!"
 
 __builtins__['멈춰'] = stop
 #########################################################
 KEYWORD = [1234567891] #-로 표시할만한 거
 def _pgraph(graph) :
-		for i, l in enumerate(graph) :
-				#print(str(i) + " : ", v)
-				print(f"{i:2}: [", end="")
-				for v in l :
-						print(f"{' -' if v in KEYWORD else v:2}", end=" ")
-				print("]")
-		print()
+	for i, l in enumerate(graph) :
+		#print(str(i) + " : ", v)
+		print(f"{i:2}: [", end="")
+		for v in l :
+			print(f"{' -' if v in KEYWORD else v:2}", end=" ")
+		print("]")
+	print()
 
 __builtins__['pgraph'] = _pgraph

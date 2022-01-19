@@ -17,7 +17,7 @@ def DFS(graph, start):
 						check[v] = True	#들어갔음을 확인
 						stack += graph[v]	#해당 노드에 연결된 간선 추가
 
-def DFS_graph(start):
+def DFS_tree(start):
 		q = [start]
 		while q:
 				v = q.pop()
