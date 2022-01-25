@@ -171,8 +171,13 @@ def stop() :
 
 __builtins__['멈춰'] = stop
 #########################################################
-KEYWORD = [1234567891] #-로 표시할만한 거
+KEYWORD = [1234567891, None] #-로 표시할만한 거
 def _pgraph(graph) :
+
+	print(" "*4, end="")
+	for i in range(len(graph)) :
+		print(f"{i:3}", end="")
+	print()
 	for i, l in enumerate(graph) :
 		#print(str(i) + " : ", v)
 		print(f"{i:2}: [", end="")
@@ -182,3 +187,13 @@ def _pgraph(graph) :
 	print()
 
 __builtins__['pgraph'] = _pgraph
+
+import io, os
+#input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
+
+##########################################################
+def pprint(obj, **kwargs) :
+	import numpy #이게 좀 느려서 함수안에 넣었다.
+	numpy.set_printoptions(linewidth = 999)
+	print(numpy.array(obj, copy=False, **kwargs), "\n")
+__builtins__['pprint'] = pprint

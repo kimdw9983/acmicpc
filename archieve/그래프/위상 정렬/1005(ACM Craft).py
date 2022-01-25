@@ -22,7 +22,7 @@ for _ in range(T) :
 	s = int(input())
 	while Q :
 		v = Q.popleft()
-		#if v == s : break
+		if v == s : break
 		for e in graph[v] :
 			IN[e] -= 1
 			dp[e] = max(dp[v] + W[e], dp[e])

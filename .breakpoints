@@ -1,18 +1,10 @@
 {
   "files": {
-    "archieve/트릭/2164(카드2).py": [
+    "test.py": [
       {
-        "id": "043732dd-7626-4817-ae27-f9d6bdb8d106",
-        "line": 2,
-        "version": 1,
-        "index": 17
-      }
-    ],
-    "test2.py": [
-      {
-        "id": "514dee0a-0f08-4037-95cb-9dc4d043552f",
+        "id": "b46fdddb-a8e0-4545-be25-83328ebd3f73",
         "line": 1,
-        "version": 498,
+        "version": 128145,
         "index": 0
       }
     ]
