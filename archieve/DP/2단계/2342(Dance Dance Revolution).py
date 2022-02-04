@@ -86,7 +86,8 @@ def DDR(i, l, r) :
 dp = memo()
 print(DDR(0, 0, 0))
 ###################################################333
-import sys
+import sys, collections
+sys.setrecursionlimit(10**6)
 command = [*map(int, sys.stdin.readline().split()[:-1])]
 
 def step(s,e) :
@@ -96,27 +97,17 @@ def step(s,e) :
 	elif (s-e) % 4 == 2 : return 4 
 	return 3
 
-class memo():
-	def __setitem__(self, key, item):
-		self.__dict__[key] = item
-
-	def __getitem__(self, key) : #키가 없으면 큰 값 반환
-		return self.__dict__[key] if key in self.__dict__ else 1234567891 
-
-def DDR() :
-	result = 1234567891
-	for i, c in enumerate(command) :
-		for l in range(5) :
-			for r in range(5) :
-				L = step(l, c)
-				R = step(r, c)
-				dp[i+1, c, r] = min(dp[i+1, c, r], dp[i, l, r] + L)
-				dp[i+1, l, c] = min(dp[i+1, l, c], dp[i, l, r] + R)
-				if i == len(command)-1 :
-					result = min(result, dp[i+1, c, r], dp[i+1, l, c])
+dp = collections.defaultdict(lambda: 1234567891)
+N = len(command)
+def DDR(i, l, r) :
+	if i == N : return 0
+	if (i, l, r) in dp : return dp[i, l, r]
 	
-	return result
-
-dp = memo()
-dp[0, 0, 0] = 0
-print(DDR())
+	c = command[i]
+	L = step(l, c) + DDR(i+1, c, r)
+	R = step(r, c) + DDR(i+1, l, c)
+	
+	dp[i, l, r] = min(L, R)
+	return dp[i, l, r]
+	
+print(DDR(0, 0, 0))

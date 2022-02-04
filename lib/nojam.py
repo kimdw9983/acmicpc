@@ -195,5 +195,5 @@ import io, os
 def pprint(obj, **kwargs) :
 	import numpy #이게 좀 느려서 함수안에 넣었다.
 	numpy.set_printoptions(linewidth = 999)
-	print(numpy.array(obj, copy=False, **kwargs), "\n")
+	print(numpy.array(obj, copy=False, dtype=object, **kwargs), "\n")
 __builtins__['pprint'] = pprint

@@ -10,21 +10,18 @@ memo = dict()
 for i in range(3):	#초기값
 		memo[0, i] = DATA[0, i]
 
+import collections
 
-def DP(*key):
+NONE = 1234567891
+memo = collections.defaultdict(lambda: NONE)
+def dp(*key):
 	if key in memo:
-			return memo[key]
-	else:
-			memo[key] = 0	#재귀 관계식
-			return memo[key]
+		return memo[key]
+		
+	memo[key] = 0	
+	return memo[key]
 
 
-class memo():
-	def __setitem__(self, key, item):
-		self.__dict__[key] = item
-
-	def __getitem__(self, key) : #키가 없으면 큰 값 반환
-		return self.__dict__[key] if key in self.__dict__ else 1234567891 
 """
 ※ 동적 계획법(DP) 기반의 알고리즘 동작 방식 
 

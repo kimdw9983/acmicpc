@@ -1,3 +1,20 @@
 {
-  "files": {}
+  "files": {
+    "input": [
+      {
+        "id": "f1885bbf-4b4f-4a67-b4b7-8cf93da1c4b1",
+        "line": 2,
+        "version": 9495,
+        "index": 19
+      }
+    ],
+    "test.py": [
+      {
+        "id": "e1444221-3a04-451d-9ae8-40b3e8271b56",
+        "line": 1,
+        "version": 138363,
+        "index": 0
+      }
+    ]
+  }
 }

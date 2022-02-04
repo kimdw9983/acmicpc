@@ -3,7 +3,6 @@ c = 'a'
 
 #int -> char (97 -> a)
 chr(i)
-
 #char -> int (z -> 97)
 ord(c)
 
@@ -14,3 +13,9 @@ ord(c) - 48
 ord(c) - 97
 #A = 65, Z = 90
 ord(c) - 65
+
+#A -> a(대문자-> 소문자)
+chr(ord(c) + 32)
+
+#a -> A(소문자 -> 대문자)
+chr(ord(c) - 32)
