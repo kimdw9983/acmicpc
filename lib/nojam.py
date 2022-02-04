@@ -1,18 +1,29 @@
-import sys, time, datetime, pprint
-
+#####################################################
+def NULL(Um=None,Jun=None,Sik=None,*Is,**alive) :
+	return 
+__builtins__['NULL'] = NULL
+def no_print() :
+	__builtins__['print'] = NULL
+#####################################################
+import sys, time, datetime, os, io
 f = open("input") #파일의 iterator를 공유한다.
 
-class hack_open :
-	def __init__(self) :
+class f_iter :
+	def __init__(self, *junk) :
 		self.iter = iter(f)
 
+class hack_stdin(f_iter):
 	def __call__(self, *junk) :
 		try :
 			return self.iter.__next__()
 		except StopIteration :
 			None
 
-class hack_input(hack_open) :
+class hack_BytesIO(hack_stdin) :
+	def readline(self, *junk) :
+		return self.__call__(self)
+
+class hack_input(f_iter) :
 	def __call__(self, *junk) :
 		try :
 			return self.iter.__next__().rstrip() #줄바꿈문자 제거
@@ -20,15 +31,13 @@ class hack_input(hack_open) :
 			None
 
 __builtins__['f'] = f
-sys.stdin.readline = hack_open()
+sys.stdin.readline = hack_stdin()
 __builtins__['input'] = hack_input()
+#os._read = os.read
+#os.read = NULL
+io.BytesIO = hack_BytesIO
 __builtins__['debug'] = __builtins__['print']
-#####################################################
-def NULL(Um=None,Jun=None,Sik=None,*Is,**alive) :
-	return 
-__builtins__['NULL'] = NULL
-def no_print() :
-	__builtins__['print'] = NULL
+
 #####################################################
 perf_counter = time.perf_counter()
 process_time = time.process_time()
@@ -76,8 +85,6 @@ def fprint(*s, sep=" ", end="\n") :
 
 __builtins__['fprint'] = fprint
 ###################################################
-
-###################################################
 #https://help.acmicpc.net/judge/rte/RecursionError
 #BOJ의 채점 서버에서 이 값은 1,000으로 되어 있습니다.
 sys.setrecursionlimit(1000)
@@ -85,7 +92,6 @@ sys.setrecursionlimit(1000)
 """
 import sys
 sys.setrecursionlimit(10**6)
-
 """
 ##################################################
 #https://stackoverflow.com/questions/492519/timeout-on-a-function-call
@@ -145,7 +151,7 @@ def _is_prime(n):
 		f += 6
 	return True
 def is_prime(n) :
-	print(f"{n}은 소수{'이다' if _is_prime(n) else '가 아니다'}")
+	print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
 
 #최소공배수
 def lcm(m, n) :
@@ -193,7 +199,7 @@ import io, os
 
 ##########################################################
 def pprint(obj, **kwargs) :
-	import numpy #이게 좀 느려서 함수안에 넣었다.
-	numpy.set_printoptions(linewidth = 999)
-	print(numpy.array(obj, copy=False, dtype=object, **kwargs), "\n")
+	from numpy import set_printoptions, array #이게 좀 느려서 함수안에 넣었다.
+	set_printoptions(linewidth = 999)
+	print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
 __builtins__['pprint'] = pprint

@@ -6,7 +6,7 @@ from importlib import reload
 #reload(test)
 
 def next_case() :
-	f.seek(0)
+	f.seek(0) #파일포인터를 처음지점으로 옮긴다
 	reload(test)
 
 import test
