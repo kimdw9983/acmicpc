@@ -126,3 +126,7 @@ def is_prime64(a) :
 		result &= miller(a, n)
 		if not result : break
 	return result
+
+#자릿수
+import math
+math.log10
