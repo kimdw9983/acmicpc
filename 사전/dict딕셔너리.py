@@ -5,3 +5,10 @@ dict([(v, k) for k, v in DoGam.items()])
 
 #list를 값 : 키 의 형태로 변환(1대1 매칭일때만 가능)
 d = {v: k for k, v in enumerate(l))}
+DoGam.values() #value tuple
+DoGam.keys()
+
+import collections
+
+NONE = 1234567891
+memo = collections.defaultdict(lambda: NONE)

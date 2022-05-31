@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "input": [
+      {
+        "id": "217707c5-c7d7-4494-b6c1-5304eb8ad308",
+        "line": 1,
+        "version": 10623,
+        "index": 0
+      }
+    ]
+  }
 }

@@ -6,7 +6,7 @@ def no_print() :
 	__builtins__['print'] = NULL
 #####################################################
 import sys, time, datetime, os, io
-f = open("input") #파일의 iterator를 공유한다.
+f = open("input", 'r+') #파일의 iterator를 공유한다.
 
 class f_iter :
 	def __init__(self, *junk) :
@@ -14,23 +14,27 @@ class f_iter :
 
 class hack_stdin(f_iter):
 	def __call__(self, *junk) :
-		try :
-			return self.iter.__next__()
-		except StopIteration :
-			None
-
+		return self.iter.readline()
+		
 class hack_BytesIO(hack_stdin) :
 	def readline(self, *junk) :
 		return self.__call__(self)
 
 class hack_input(f_iter) :
 	def __call__(self, *junk) :
-		try :
-			return self.iter.__next__().rstrip() #줄바꿈문자 제거
-		except StopIteration :
-			None
+		s = self.iter.readline().rstrip()
+		if s :
+			return s
+		else :
+			raise StopIteration
+		
+		# try :
+		# 	return self.iter.__next__().rstrip() #줄바꿈문자 제거
+		# except StopIteration :
+		# 	None
 
 __builtins__['f'] = f
+__builtins__['fp'] = 0
 sys.stdin.readline = hack_stdin()
 __builtins__['input'] = hack_input()
 #os._read = os.read
