@@ -1,26 +1,52 @@
-from lib.nojam import *
-#from pre import *
-from importlib import reload
+import importlib, sys
+from lib.nojam import * #builtins 해킹 ㅋㅋ
 
 #no_print() #print함수를 아무것도 하지 않는 함수로 바꾸기.
-#reload(test)
 
-
-def load_next_case():
-	valid = True
-	while valid:
+def unit_test(module): #다음케이스 자동으로 로드
+	global fp
+	while True:
 		try:
-			f.tell()
+			first_fp = fp
+			input() #f가 비었으면 예외가 발생함.
 		except:
-			valid = False
+			return
 
-		print("\n" + "-" * 10 + "[main.py] NEXT CASE" + "-" * 10 + "\n")
-		reload(test)
+		if first_fp :
+			print("\n"+"-"*10+"["+module.__name__+".py] NEXT CASE"+"-"*10+"\n")
+		seek(first_fp) #파일포인터를 input() 이전으로
 
+		prev_fp = first_fp
+		importlib.reload(module)
+		
+		if fp == prev_fp : #모듈을 실행했는데 파일포인터가 움직이지 않은 경우 -> 종료조건
+			return
+		
 
-import test
+def get_module(name, package=None): #module객체를	실행시키지 않고 가지고 옴
+	#https://docs.python.org/3/library/importlib.html#importing-a-source-file-directly
+	absolute_name = importlib.util.resolve_name(name, package)
+	try:
+		return sys.modules[absolute_name]
+	except KeyError:
+		pass
+	
+	path = None
+	for finder in sys.meta_path:
+		spec = finder.find_spec(absolute_name, path)
+		if spec is not None:
+			break
+	module = importlib.util.module_from_spec(spec)
+	sys.modules[absolute_name] = module
 
-f.seek(0)  #파일포인터를 처음지점으로 옮긴다
-import test2
+	return module
 
-#load_next_case()
+try :
+	input()
+	seek()
+	unit_test(get_module("test"))
+
+	seek()
+	unit_test(get_module("test2"))
+except : 
+	pass

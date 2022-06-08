@@ -1,2 +1,1 @@
-import sys
-sys.stdin.readline()
+print("yes", input())

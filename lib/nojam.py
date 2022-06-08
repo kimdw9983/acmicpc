@@ -9,38 +9,40 @@ import sys, time, datetime, os, io
 f = open("input", 'r+') #파일의 iterator를 공유한다.
 
 class f_iter :
-	def __init__(self, *junk) :
+	def __init__(self, *_) :
 		self.iter = iter(f)
 
-class hack_stdin(f_iter):
-	def __call__(self, *junk) :
-		return self.iter.readline()
-		
-class hack_BytesIO(hack_stdin) :
-	def readline(self, *junk) :
-		return self.__call__(self)
-
-class hack_input(f_iter) :
-	def __call__(self, *junk) :
-		s = self.iter.readline().rstrip()
-		if s :
-			return s
+	def read(self) :
+		str = f.readline()
+		if str :
+			__builtins__['fp'] = self.iter.tell()
+			return str
 		else :
 			raise StopIteration
-		
-		# try :
-		# 	return self.iter.__next__().rstrip() #줄바꿈문자 제거
-		# except StopIteration :
-		# 	None
 
-__builtins__['f'] = f
-__builtins__['fp'] = 0
+class hack_stdin(f_iter):
+	def __call__(self, *_) :
+		return self.read()
+		
+class hack_BytesIO(f_iter) :
+	def readline(self, *_) :
+		return self.read()
+
+class hack_input(f_iter) :
+	def __call__(self, *_) :
+		return self.read().rstrip()
+
+def seek(i=0) :
+	f.seek(i)
+	__builtins__['f'] = f
+	__builtins__['fp'] = i
+seek()
+
+__builtins__['seek'] = seek
 sys.stdin.readline = hack_stdin()
 __builtins__['input'] = hack_input()
-#os._read = os.read
-#os.read = NULL
 io.BytesIO = hack_BytesIO
-__builtins__['debug'] = __builtins__['print']
+
 
 #####################################################
 perf_counter = time.perf_counter()
