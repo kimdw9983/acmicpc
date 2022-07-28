@@ -1,3 +1,5 @@
+# CRT 성질을 이용해서 푸는 문제같다.
+
 N, B = map(int, input().split())
 memo = [[0] * B for _ in range(N)]
 for i in range(B-1) :
@@ -15,3 +17,4 @@ if N == 1 :
 	print(B-1)
 else : 
 	print(sum(memo[N-1]) % 1000000000)
+

@@ -1,3 +1,5 @@
+#import test
+
 import importlib, sys
 from lib.nojam import * #builtins 해킹 ㅋㅋ
 
@@ -5,6 +7,8 @@ from lib.nojam import * #builtins 해킹 ㅋㅋ
 
 def unit_test(module): #다음케이스 자동으로 로드
 	global fp
+	tnum = 1
+	
 	while True:
 		try:
 			first_fp = fp
@@ -13,7 +17,8 @@ def unit_test(module): #다음케이스 자동으로 로드
 			return
 
 		if first_fp :
-			print("\n"+"-"*10+"["+module.__name__+".py] NEXT CASE"+"-"*10+"\n")
+			tnum += 1
+			print("-"*10+"["+module.__name__+".py] CASE "+ str(tnum) +"-"*10)
 		seek(first_fp) #파일포인터를 input() 이전으로
 
 		prev_fp = first_fp
@@ -23,7 +28,7 @@ def unit_test(module): #다음케이스 자동으로 로드
 			return
 		
 
-def get_module(name, package=None): #module객체를	실행시키지 않고 가지고 옴
+def get_module(name, package=None): #module객체를 실행시키지 않고 가지고 옴
 	#https://docs.python.org/3/library/importlib.html#importing-a-source-file-directly
 	absolute_name = importlib.util.resolve_name(name, package)
 	try:
@@ -43,10 +48,14 @@ def get_module(name, package=None): #module객체를	실행시키지 않고 가�
 
 try :
 	input()
-	seek()
-	unit_test(get_module("test"))
-
-	seek()
-	unit_test(get_module("test2"))
 except : 
 	pass
+
+seek()
+unit_test(get_module("test"))
+
+seek()
+unit_test(get_module("test2"))
+
+seek()
+unit_test(get_module("test3"))
