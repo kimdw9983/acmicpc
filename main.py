@@ -5,6 +5,11 @@ from lib.nojam import * #builtins 해킹 ㅋㅋ
 
 #no_print() #print함수를 아무것도 하지 않는 함수로 바꾸기.
 
+###############
+# TODO        
+# TC 자동생성(json방식 input)
+# TC에서 오류 발생해도 모든 케이스 출력하는 옵션 추가
+
 def unit_test(module): #다음케이스 자동으로 로드
 	global fp
 	tnum = 1
@@ -50,6 +55,9 @@ try :
 	input()
 except : 
 	pass
+
+seek()
+unit_test(get_module("pre_test"))
 
 seek()
 unit_test(get_module("test"))
