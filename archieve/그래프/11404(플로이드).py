@@ -19,3 +19,5 @@ for i, l in enumerate(graph) :
 		for j, v in enumerate(l) :
 				sys.stdout.write("0 " if v == INF else str(v) + " ")
 		sys.stdout.write("\n")
+
+#https://ansohxxn.github.io/algorithm/floyd/
