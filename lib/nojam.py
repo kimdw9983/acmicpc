@@ -43,7 +43,7 @@ sys.stdin.readline = hack_stdin()
 __builtins__['input'] = hack_input()
 io.BytesIO = hack_BytesIO
 
-
+__builtins__['debug'] = print #TODO: 어느파일껀지
 #####################################################
 perf_counter = time.perf_counter()
 process_time = time.process_time()
