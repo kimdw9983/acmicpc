@@ -188,3 +188,5 @@ pyrightconfig.json
 
 input.txt
 output
+pre_test.py
+test.*.py
