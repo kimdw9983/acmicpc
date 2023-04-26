@@ -6,7 +6,7 @@ def no_print() :
 	__builtins__['print'] = NULL
 #####################################################
 import sys, time, datetime, os, io
-f = open("input", 'r+') #파일의 iterator를 공유한다.
+f = open("input.txt", 'r+') #파일의 iterator를 공유한다.
 
 class f_iter :
 	def __init__(self, *_) :
