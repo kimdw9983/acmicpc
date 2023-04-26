@@ -1,7 +1,7 @@
 #import test
 
 import importlib, sys
-from lib.nojam import * #builtins 해킹 ㅋㅋ
+from lib.nojam import *
 
 #no_print() #print함수를 아무것도 하지 않는 함수로 바꾸기.
 
