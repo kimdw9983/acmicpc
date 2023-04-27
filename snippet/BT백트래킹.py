@@ -27,3 +27,10 @@ def permute(level, s):
 				return s
 		else:
 				return [y + x for y in permute(1, s) for x in permute(level - 1, s)]
+
+S = "Some String"
+l = len(S)
+def palindrome(i):
+  if l - 2 * i <= 0 : return 1
+  if S[i] == S[-i-1]: return palindrome(i+1)
+  else: return 0
