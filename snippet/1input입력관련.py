@@ -56,3 +56,10 @@ grid = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 
 #그리드 입력
 grid = [input().rstrip() for i in range(N)]
+
+#EOF
+while True :
+  try :
+    pass #impelement
+  except EOFError:
+    break
