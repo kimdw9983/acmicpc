@@ -49,12 +49,14 @@ def get_module(name, package=None): #module객체를 실행시키지 않고 가�
 
   return module
 
+import pre_test
+
 try :
   input()
 except : 
   pass
 
-for fname in ("pre_test", "test", "test2", "test3") :
+for fname in ("test", "test2", "test3") :
   module = get_module(fname)
   if not module : continue
 
