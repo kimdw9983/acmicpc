@@ -6,8 +6,6 @@ print('\n'.join(map(str, l)))
 print(*l, sep="\n")
 #한줄씩 출력
 
-print = sys.stdout.write
-
 #소수 셋째까지 반올림
 round(3.14159265358, 3) #3.142
 
