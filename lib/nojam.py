@@ -1,41 +1,44 @@
 #####################################################
 def NULL(Um=None,Jun=None,Sik=None,*Is,**alive) :
-	return 
+  return 
 __builtins__['NULL'] = NULL
 def no_print() :
-	__builtins__['print'] = NULL
+  __builtins__['print'] = NULL
 #####################################################
 import sys, time, datetime, os, io
-f = open("input.txt", 'r+') #파일의 iterator를 공유한다.
+f = open("input.txt", 'r+', encoding="utf-8", errors="ignore") #파일의 iterator를 공유한다.
 
 class f_iter :
-	def __init__(self, *_) :
-		self.iter = iter(f)
+  def __init__(self, *_) :
+    self.iter = iter(f)
 
-	def read(self) :
-		str = f.readline()
-		if str :
-			__builtins__['fp'] = self.iter.tell()
-			return str
-		else :
-			raise StopIteration
+  def read(self) :
+    while True :
+      s = f.readline()
+
+      if s :
+        if s[:2] == ";;": continue
+        __builtins__['fp'] = self.iter.tell()
+        return s
+      else :
+        raise StopIteration
 
 class hack_stdin(f_iter):
-	def __call__(self, *_) :
-		return self.read()
-		
+  def __call__(self, *_) :
+    return self.read()
+    
 class hack_BytesIO(f_iter) :
-	def readline(self, *_) :
-		return self.read()
+  def readline(self, *_) :
+    return self.read()
 
 class hack_input(f_iter) :
-	def __call__(self, *_) :
-		return self.read().rstrip()
+  def __call__(self, *_) :
+    return self.read().rstrip()
 
 def seek(i=0) :
-	f.seek(i)
-	__builtins__['f'] = f
-	__builtins__['fp'] = i
+  f.seek(i)
+  __builtins__['f'] = f
+  __builtins__['fp'] = i
 seek()
 
 __builtins__['seek'] = seek
@@ -48,8 +51,8 @@ __builtins__['debug'] = print #TODO: 어느파일껀지
 perf_counter = time.perf_counter()
 process_time = time.process_time()
 def benchmark() :
-	global perf_counter, process_time
-	print(f'perf_counter : {time.perf_counter() - perf_counter}\nprocess_time : {time.process_time()- process_time}')
+  global perf_counter, process_time
+  print(f'perf_counter : {time.perf_counter() - perf_counter}\nprocess_time : {time.process_time()- process_time}')
 
 __builtins__['benchmark'] = benchmark
 #####################################################
@@ -62,32 +65,32 @@ current_process = psutil.Process(PID)
 before_memory = current_process.memory_info()[1]
 
 def memory() :
-	global before_memory
-	after_memory = current_process.memory_info()[1]
-	#left_memory = after_memory - before_memory #삭제되지 않은 메모리
+  global before_memory
+  after_memory = current_process.memory_info()[1]
+  #left_memory = after_memory - before_memory #삭제되지 않은 메모리
 
-	print(f"BEFORE : {before_memory} B")
-	print(f"AFTER	: {after_memory} B")
-	#print(f"LEFT	 : {left_memory} B")
+  print(f"BEFORE : {before_memory} B")
+  print(f"AFTER  : {after_memory} B")
+  #print(f"LEFT   : {left_memory} B")
 
 Repl.it의 가상환경에는 별로 도움되지않는
 """
 def memory(x) : #단위:Byte
-	print(sys.getsizeof(x))
+  print(sys.getsizeof(x))
 
 __builtins__['memory'] = memory
 #####################################################
 Repl_now = datetime.datetime.now()
 Korea_now = Repl_now + datetime.timedelta(hours=9)
 fname = Korea_now.strftime("%Y%m%d_%H:%M:%S")
-	
+  
 def fprint(*s, sep=" ", end="\n") :
-	line = ""
-	for w in s :
-		line += w.__str__()+sep
-	line += end
-	with open("output/"+fname, "a") as f:
-		f.write(line)
+  line = ""
+  for w in s :
+    line += w.__str__()+sep
+  line += end
+  with open("output/"+fname, "a") as f:
+    f.write(line)
 
 __builtins__['fprint'] = fprint
 ###################################################
@@ -107,34 +110,34 @@ import signal
 import functools
 
 class TimeoutError(Exception):
-	pass
+  pass
 
 def timeout(seconds=1, error_message=os.strerror(errno.ETIME)):
-	def decorator(func):
-		def _handle_timeout(signum, frame):
-			raise TimeoutError(error_message)
+  def decorator(func):
+    def _handle_timeout(signum, frame):
+      raise TimeoutError(error_message)
 
-		@functools.wraps(func)
-		def wrapper(*args, **kwargs):
-			signal.signal(signal.SIGALRM, _handle_timeout)
-			signal.alarm(seconds)
-			try:
-				result = func(*args, **kwargs)
-			finally:
-				signal.alarm(0)
-			return result
-		return wrapper
-	return decorator
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+      signal.signal(signal.SIGALRM, _handle_timeout)
+      signal.alarm(seconds)
+      try:
+        result = func(*args, **kwargs)
+      finally:
+        signal.alarm(0)
+      return result
+    return wrapper
+  return decorator
 
 __builtins__['timeout'] = timeout
 ##################################################
 """
 import resource
-	
+  
 def limit_memory(maxsize):
-	soft, hard = resource.getrlimit(resource.RLIMIT_AS)
-	print(soft, hard)
-	#resource.setrlimit(resource.RLIMIT_AS, (maxsize, hard))
+  soft, hard = resource.getrlimit(resource.RLIMIT_AS)
+  print(soft, hard)
+  #resource.setrlimit(resource.RLIMIT_AS, (maxsize, hard))
 
 MB = 1024 * 1024
 limit_memory(256 * MB)
@@ -144,34 +147,34 @@ __builtins__['max_memory'] = limit_memory
 ##################################################
 import math
 def _is_prime(n):
-	#https://stackoverflow.com/questions/15285534/isprime-function-for-python-language
-	if n == 2 or n == 3: return True
-	if n < 2 or n % 2 == 0: return False
-	if n < 9: return True
-	if n % 3 == 0: return False
-	r = math.isqrt(n)
-	f = 5
-	while f <= r:
-		if n % f == 0: return False
-		if n % (f + 2) == 0: return False
-		f += 6
-	return True
+  #https://stackoverflow.com/questions/15285534/isprime-function-for-python-language
+  if n == 2 or n == 3: return True
+  if n < 2 or n % 2 == 0: return False
+  if n < 9: return True
+  if n % 3 == 0: return False
+  r = math.isqrt(n)
+  f = 5
+  while f <= r:
+    if n % f == 0: return False
+    if n % (f + 2) == 0: return False
+    f += 6
+  return True
 def is_prime(n) :
-	print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
+  print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
 
 #최소공배수
 def lcm(m, n) :
-	return m*n//math.gcd(m,n)
+  return m*n//math.gcd(m,n)
 
 def divisors(n : int) : #n의 모든 약수 출력 O(n^.5)
-	if not n :
-		return [0]
-	l = []
-	for i in range(1, math.isqrt(n) + 1): 
-		if not n % i:						
-			l.append(i)
-			l.append(n//i)
-	return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
+  if not n :
+    return [0]
+  l = []
+  for i in range(1, math.isqrt(n) + 1): 
+    if not n % i:            
+      l.append(i)
+      l.append(n//i)
+  return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
 
 __builtins__['is_prime'] = is_prime
 __builtins__['lcm'] = lcm
@@ -179,24 +182,24 @@ __builtins__['gcd'] = math.gcd
 __builtins__['divisors'] = divisors
 #########################################################
 def stop() :
-	assert False, "멈춰!!"
+  assert False, "멈춰!!"
 
 __builtins__['멈춰'] = stop
 #########################################################
 KEYWORD = [1234567891, None] #-로 표시할만한 거
 def _pgraph(graph) :
 
-	print(" "*4, end="")
-	for i in range(len(graph)) :
-		print(f"{i:3}", end="")
-	print()
-	for i, l in enumerate(graph) :
-		#print(str(i) + " : ", v)
-		print(f"{i:2}: [", end="")
-		for v in l :
-			print(f"{' -' if v in KEYWORD else v:2}", end=" ")
-		print("]")
-	print()
+  print(" "*4, end="")
+  for i in range(len(graph)) :
+    print(f"{i:3}", end="")
+  print()
+  for i, l in enumerate(graph) :
+    #print(str(i) + " : ", v)
+    print(f"{i:2}: [", end="")
+    for v in l :
+      print(f"{' -' if v in KEYWORD else v:2}", end=" ")
+    print("]")
+  print()
 
 __builtins__['pgraph'] = _pgraph
 
@@ -205,7 +208,7 @@ import io, os
 
 ##########################################################
 def pprint(obj, **kwargs) :
-	from numpy import set_printoptions, array #이게 좀 느려서 함수안에 넣었다.
-	set_printoptions(linewidth = 999)
-	print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
+  from numpy import set_printoptions, array #이게 좀 느려서 함수안에 넣었다.
+  set_printoptions(linewidth = 999)
+  print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
 __builtins__['pprint'] = pprint
