@@ -2,24 +2,24 @@ DATA = dict()
 
 N = int(input())
 for n in range(N):
-		for i, v in enumerate(map(int, input().split())):
-				DATA[n, i] = v
+    for i, v in enumerate(map(int, input().split())):
+        DATA[n, i] = v
 
 
 memo = dict()
-for i in range(3):	#초기값
-		memo[0, i] = DATA[0, i]
+for i in range(3):  #초기값
+    memo[0, i] = DATA[0, i]
 
 import collections
 
 NONE = 1234567891
 memo = collections.defaultdict(lambda: NONE)
 def dp(*key):
-	if key in memo:
-		return memo[key]
-		
-	memo[key] = 0	
-	return memo[key]
+  if key in memo:
+    return memo[key]
+    
+  memo[key] = 0  
+  return memo[key]
 
 
 """

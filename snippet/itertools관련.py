@@ -17,8 +17,8 @@ w = itertools.combinations(alphabet, 2)
 #ab, ac, bc
 """ 부분 집합 모두 출력
 for i in range(len(alphabet) + 1) :
-		for c in itertools.combinations(alphabet, i) :
-				print("".join(c))
+    for c in itertools.combinations(alphabet, i) :
+        print("".join(c))
 """
 
 #nHr(중복조합) - 순서상관없고, 중복있을때

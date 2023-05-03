@@ -10,11 +10,11 @@ last = P[0]
 dist = D[0]
 sum = 0
 for i in range(1, len(D)) :
-		if last <= P[i] : 
-				dist += D[i]
-		else :
-				sum += last*dist
-				last = P[i]
-				dist = D[i]
+    if last <= P[i] : 
+        dist += D[i]
+    else :
+        sum += last*dist
+        last = P[i]
+        dist = D[i]
 
 print(sum + dist * last)

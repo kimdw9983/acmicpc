@@ -9,8 +9,8 @@ RyPx = (P[1] - R[1]) * (Q[0] - R[0])
 result = RxPy - RyPx
 
 if result > 0 :
-	print(1)
+  print(1)
 elif result < 0 :
-	print(-1)
+  print(-1)
 else :
-	print(0)
+  print(0)

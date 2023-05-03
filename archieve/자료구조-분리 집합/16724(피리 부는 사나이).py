@@ -13,27 +13,27 @@ dy = [0, 0, -1, 1]
 move = "UDLR"
 
 def find(cnt, x, y):
-	if not visited[x][y]:
-		visited[x][y] = True
-		i = move.index(grid[x][y]) #다음정점의 방향을 가져옴
-		nx = x + dx[i]
-		ny = y + dy[i]
-		root[x][y] = find(cnt, nx, ny) #다음 정점을 찾음 + 사이클을 찾은경우 Z와 cnt중에 낮은 값으로 갱신
+  if not visited[x][y]:
+    visited[x][y] = True
+    i = move.index(grid[x][y]) #다음정점의 방향을 가져옴
+    nx = x + dx[i]
+    ny = y + dy[i]
+    root[x][y] = find(cnt, nx, ny) #다음 정점을 찾음 + 사이클을 찾은경우 Z와 cnt중에 낮은 값으로 갱신
 
-	#return min(cnt, root[x][y])
-	Z = root[x][y]
-	if Z < cnt and Z : 
-		#print("lessor")
-		return Z
-	else :
-		return cnt
+  #return min(cnt, root[x][y])
+  Z = root[x][y]
+  if Z < cnt and Z : 
+    #print("lessor")
+    return Z
+  else :
+    return cnt
 
 for x, l in enumerate(visited) :
-	for y, v in enumerate(l) :
-		if not v :
-			root[x][y] = cnt #root값을 정해줌
-			res = find(cnt, x, y)
-			cnt = cnt+1 if res == cnt else cnt
+  for y, v in enumerate(l) :
+    if not v :
+      root[x][y] = cnt #root값을 정해줌
+      res = find(cnt, x, y)
+      cnt = cnt+1 if res == cnt else cnt
 
 print(cnt-1)
 #pprint(root)

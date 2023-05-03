@@ -5,9 +5,9 @@ DATA = tuple(map(int, input().split()))
 
 bis = [0]
 for num in DATA :
-	if bis[-1] < num :
-		bis.append(num)
-	else :
-		bis[bisect.bisect_left(bis, num)] = num
+  if bis[-1] < num :
+    bis.append(num)
+  else :
+    bis[bisect.bisect_left(bis, num)] = num
 
 print(len(bis)-1)
