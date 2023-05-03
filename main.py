@@ -37,7 +37,7 @@ def invoke(module):
     importlib.reload(module)
     
     # print("-"*10+"["+module.__name__+".py] CASE "+ str(tnum) +"-"*10)
-    print(f"{blue}{module.__name__}.py{reset} {yellow}CASE {str(tnum)}{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
+    print(f"{green}[DONE]\t{blue}{module.__name__}.py{reset} {yellow}CASE {str(tnum)}{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
     if fp == prev_fp : #모듈을 실행했는데 파일포인터가 움직이지 않은 경우 -> 종료조건
       return
     
