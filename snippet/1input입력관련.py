@@ -23,7 +23,11 @@ for T in range(N):
 #N
 N, K = map(int, sys.stdin.readline().split())
 for T in range(N):
-    X = int(sys.stdin.readline())
+  X = int(sys.stdin.readline())
+
+#faster if there're only numeric
+N =list(map(int,open(0).read().lstrip("0123456789").split()))
+
 
 #N
 #1 2
@@ -38,9 +42,6 @@ for T in range(N):
 #1 2 3 4 5 6 7 8 9 10
 N = int(sys.stdin.readline())
 l = map(int, sys.stdin.readline().split())
-
-N = sys.stdin.readline()
-M = sys.stdin.readline().rstrip().split()
 
 #M N
 #e1 e2 e3... eM

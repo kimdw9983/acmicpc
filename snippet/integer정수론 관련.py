@@ -81,7 +81,7 @@ def bin(n, k):
 
 
 #A^B%C를 효율적으로 처리.
-pow(a,b,c)
+pow(1,2,3)
 
 
 #분할 정복을 이용한 거듭제곱
@@ -103,7 +103,7 @@ B % 1234567891 #대충 마무리 작업
 142857
 
 
-#밀러-라빈 소수 판정법
+#밀러-라빈 소수 판정법, n이 10^6를 넘어갈 때 부터 사용한다.
 #n이 '소수인것 같으면' true를 반환.
 def miller(n, a) : 
   if not a % n : return True
@@ -113,16 +113,16 @@ def miller(n, a) :
     if tmp == n-1 : return True
     if k%2 : return tmp == 1 or tmp == n-1
     k //= 2
-#n < 4,759,123,141 일 경우
+#n < 4,759,123,141 일 경우 http://miller-rabin.appspot.com/
 def is_prime32(a) : 
   for n in (2,7,61) :
     if not miller(a, n) : return False
   return True
 
-#n < 2^64(출처 몰?루) 일 경우
+#n < 2^64일 경우
 def is_prime64(a) :
   result = True
-  for n in (2,3,5,7,11,13,17,19,23,29,31,37) :
+  for n in (2, 325, 9375, 28178, 450775, 9780504, 1795265022) : #https://www.teferi.net/ps/%EC%86%8C%EC%88%98_%ED%8C%90%EB%B3%84
     result &= miller(a, n)
     if not result : break
   return result
