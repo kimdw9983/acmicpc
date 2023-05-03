@@ -1,6 +1,6 @@
 #import test
 
-import importlib, sys
+import importlib, sys, time
 from lib.nojam import *
 
 #no_print() #print함수를 아무것도 하지 않는 함수로 바꾸기.
@@ -9,6 +9,13 @@ from lib.nojam import *
 # TODO        
 # TC 자동생성(json방식 input)
 # TC에서 오류 발생해도 모든 케이스 출력하는 옵션 추가
+
+magenta = "\x1b[35;20m"
+green = "\x1b[32;20m"
+blue = "\x1b[34m"
+yellow = "\x1b[33;20m"
+red = "\x1b[31;20m"
+reset = "\x1b[0m"
 
 def invoke(module):
   global fp
@@ -23,12 +30,14 @@ def invoke(module):
 
     if first_fp :
       tnum += 1
-      print("-"*10+"["+module.__name__+".py] CASE "+ str(tnum) +"-"*10)
     seek(first_fp)
 
     prev_fp = first_fp
+    elapsed = time.time()
     importlib.reload(module)
     
+    # print("-"*10+"["+module.__name__+".py] CASE "+ str(tnum) +"-"*10)
+    print(f"{blue}{module.__name__}.py{reset} {yellow}CASE {str(tnum)}{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
     if fp == prev_fp : #모듈을 실행했는데 파일포인터가 움직이지 않은 경우 -> 종료조건
       return
     
