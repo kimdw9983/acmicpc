@@ -25,7 +25,7 @@ N, K = map(int, sys.stdin.readline().split())
 for T in range(N):
   X = int(sys.stdin.readline())
 
-#faster if there're only numeric
+#faster, T가 0123456789중 하나로 돼있을때에만 가능
 N =list(map(int,open(0).read().lstrip("0123456789").split()))
 
 
