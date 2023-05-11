@@ -73,7 +73,7 @@ for fname in (
               # "test3", 
               # "test4",
               # "test5",
-              # "test6",
+              "test6",
               ) :
   module = get_module(fname)
   if not module : continue
