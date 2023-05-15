@@ -68,12 +68,12 @@ except :
   pass
 
 for fname in (
-              "test", 
-              # "test2", 
+              # "test", 
+              "test2", 
               # "test3", 
               # "test4",
               # "test5",
-              "test6",
+              # "test6",
               ) :
   module = get_module(fname)
   if not module : continue
