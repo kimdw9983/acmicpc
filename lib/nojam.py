@@ -162,9 +162,9 @@ def nprint(cnt, *args, **kwargs) :
   """각 case마다 cnt만큼만 print"""
   global nprint_left
   if nprint_left is None: nprint_left = cnt 
-  elif nprint_left is 0 : return
+  elif nprint_left == 0 : return
 
-  print(*args, **kwargs, end="\n")
+  print(*args, **kwargs)
   nprint_left -= 1
 __builtins__['nprint'] = nprint
 

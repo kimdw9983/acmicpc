@@ -57,7 +57,7 @@ def get_module(name, package=None): #module객체를 실행시키지 않고 가�
 
 elapsed = time.time()
 import pre_test
-print(f"{green}[DONE]\t{blue}pre_test.py{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
+# print(f"{green}[DONE]\t{blue}pre_test.py{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
 
 try :
   input()
