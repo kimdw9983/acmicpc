@@ -1,13 +1,9 @@
-#import test
-
 import importlib, sys, time
 from lib.nojam import *
 
-#no_print() #print함수를 아무것도 하지 않는 함수로 바꾸기.
-
 ###############
 # TODO        
-# TC 자동생성(json방식 input)
+# TC 자동생성
 # TC에서 오류 발생해도 모든 케이스 출력하는 옵션 추가
 
 magenta = "\x1b[35;20m"
@@ -38,6 +34,7 @@ def invoke(module):
     
     # print("-"*10+"["+module.__name__+".py] CASE "+ str(tnum) +"-"*10)
     print(f"{green}[DONE]\t{blue}{module.__name__}.py{reset} {yellow}CASE {str(tnum)}{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
+    init_nprint()
     if fp == prev_fp : #모듈을 실행했는데 파일포인터가 움직이지 않은 경우 -> 종료조건
       return
     

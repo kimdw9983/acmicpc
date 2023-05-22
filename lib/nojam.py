@@ -1,11 +1,5 @@
 #####################################################
-def NULL(Um=None,Jun=None,Sik=None,*Is,**alive) :
-  return 
-__builtins__['NULL'] = NULL
-def no_print() :
-  __builtins__['print'] = NULL
-#####################################################
-import sys, time, datetime, os, io
+import sys, datetime, os, io
 f = open("input.acmicpc", 'r+', encoding="utf-8", errors="ignore") #파일의 iterator를 공유한다.
 
 class f_iter :
@@ -48,14 +42,6 @@ io.BytesIO = hack_BytesIO
 
 __builtins__['debug'] = print #TODO: 어느파일껀지
 #####################################################
-perf_counter = time.perf_counter()
-process_time = time.process_time()
-def benchmark() :
-  global perf_counter, process_time
-  print(f'perf_counter : {time.perf_counter() - perf_counter}\nprocess_time : {time.process_time()- process_time}')
-
-__builtins__['benchmark'] = benchmark
-#####################################################
 """
 import psutil
 import os
@@ -72,32 +58,15 @@ def memory() :
   print(f"BEFORE : {before_memory} B")
   print(f"AFTER  : {after_memory} B")
   #print(f"LEFT   : {left_memory} B")
-
-Repl.it의 가상환경에는 별로 도움되지않는
 """
 def memory(x) : #단위:Byte
   print(sys.getsizeof(x))
 
 __builtins__['memory'] = memory
 #####################################################
-Repl_now = datetime.datetime.now()
-Korea_now = Repl_now + datetime.timedelta(hours=9)
-fname = Korea_now.strftime("%Y%m%d_%H:%M:%S")
-  
-def fprint(*s, sep=" ", end="\n") :
-  line = ""
-  for w in s :
-    line += w.__str__()+sep
-  line += end
-  with open("output/"+fname, "a") as f:
-    f.write(line)
-
-__builtins__['fprint'] = fprint
-###################################################
 #https://help.acmicpc.net/judge/rte/RecursionError
 #BOJ의 채점 서버에서 이 값은 1,000으로 되어 있습니다.
 sys.setrecursionlimit(1000)
-
 """
 import sys
 sys.setrecursionlimit(10**6)
@@ -180,35 +149,38 @@ __builtins__['is_prime'] = is_prime
 __builtins__['lcm'] = lcm
 __builtins__['gcd'] = math.gcd
 __builtins__['divisors'] = divisors
-#########################################################
-def stop() :
-  assert False, "멈춰!!"
-
-__builtins__['멈춰'] = stop
-#########################################################
-KEYWORD = [1234567891, None] #-로 표시할만한 거
-def _pgraph(graph) :
-
-  print(" "*4, end="")
-  for i in range(len(graph)) :
-    print(f"{i:3}", end="")
-  print()
-  for i, l in enumerate(graph) :
-    #print(str(i) + " : ", v)
-    print(f"{i:2}: [", end="")
-    for v in l :
-      print(f"{' -' if v in KEYWORD else v:2}", end=" ")
-    print("]")
-  print()
-
-__builtins__['pgraph'] = _pgraph
-
-import io, os
-#input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
-
 ##########################################################
 def pprint(obj, **kwargs) :
-  from numpy import set_printoptions, array #이게 좀 느려서 함수안에 넣었다.
+  """2차원 이상의 배열을 보기좋게 출력"""
+  from numpy import set_printoptions, array
   set_printoptions(linewidth = 999)
   print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
 __builtins__['pprint'] = pprint
+
+nprint_left = None
+def nprint(cnt, *args, **kwargs) : 
+  """각 case마다 cnt만큼만 print"""
+  global nprint_left
+  if nprint_left is None: nprint_left = cnt 
+  elif nprint_left is 0 : return
+
+  print(*args, **kwargs, end="\n")
+  nprint_left -= 1
+__builtins__['nprint'] = nprint
+
+def init_nprint():
+  global nprint_left
+  nprint_left = None
+
+def fprint(*s, sep=" ", end="\n") :
+  """출력을 output/timestamp의 형식의 파일으로 저장"""
+  timestamp = datetime.datetime.now()
+  fname = timestamp.strftime("%Y%m%d_%H:%M:%S")
+
+  line = ""
+  for w in s :
+    line += w.__str__() + sep
+  line += end
+  with open("output/"+fname, "a") as f:
+    f.write(line)
+__builtins__['fprint'] = fprint
