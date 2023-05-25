@@ -10,8 +10,3 @@ l=[]
 d = {v: k for k, v in enumerate(l)}
 d.values() #value tuple
 dic.keys()
-
-import collections
-
-NONE = 1234567891
-memo = collections.defaultdict(lambda: NONE)
