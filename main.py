@@ -13,7 +13,7 @@ yellow = "\x1b[33;20m"
 red = "\x1b[31;20m"
 reset = "\x1b[0m"
 
-def invoke(module: ModuleType):
+def invoke(module: ModuleType, fname: str):
   global fp
   tnum = 1
   
@@ -32,10 +32,11 @@ def invoke(module: ModuleType):
     elapsed = time.time()
     try :
       importlib.reload(module)
-    
-      print(f"{green}[DONE] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}{reset}")
+      status = judge_status.get(fname, "AC")
+      is_ac = status == "AC"
+      _print(f"{green if is_ac else red}[ {status} ] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}{reset}")
     except (NameError, SyntaxError, StopIteration) as e:
-      print(f"{red}[FAIL] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}\t{magenta}{type(e).__name__}{reset}")
+      _print(f"{red}[FAIL] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}\t{magenta}{type(e).__name__}{reset}")
       # seek()
     init_nprint()
     if fp == prev_fp : #모듈을 실행했는데 파일포인터가 움직이지 않은 경우 -> 종료조건
@@ -60,8 +61,9 @@ def get_module(name, package=None): #module객체를 실행시키지 않고 가�
 
 try : #필요하면 pre_test.py를 만들것.
   elapsed = time.time()
+  current_file = "pre_test"
   import pre_test
-  # print(f"{green}[DONE]\t{blue}pre_test.py{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
+  # _print(f"{green}[DONE]\t{blue}pre_test.py{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
 except :
   pass
 
@@ -82,4 +84,6 @@ for fname in (
   if not module : continue
 
   seek()
-  invoke(module)
+  set_current_file(fname)
+  init_judge()
+  invoke(module, fname)

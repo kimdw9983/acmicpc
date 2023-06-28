@@ -17,7 +17,7 @@ class f_iter :
       s = f.readline()
 
       if s :
-        if s[:2] == ";;": continue
+        if s.startswith(";;") or s.startswith("\\next"): continue #주석 구현
         __builtins__['fp'] = self.iter.tell()
         return s
       else :
@@ -29,7 +29,7 @@ class hack_stdin(f_iter):
     
 class hack_BytesIO(f_iter) :
   def readline(self, *_) :
-    return self.read()
+    return self.read().encode()
 
 class hack_input(f_iter) :
   def __call__(self, *_) :
@@ -46,11 +46,67 @@ sys.stdin.readline = hack_stdin()
 __builtins__['input'] = hack_input()
 io.BytesIO = hack_BytesIO
 
+
 def debug(*args, **kwargs) :
   args = [f"{yellow}{reset}{magenta}"] + list(args) + [reset]
-  print(*args, **kwargs)
-
+  _print(*args, **kwargs)
 __builtins__['debug'] = debug
+#####################################################
+_print = __builtins__['print']
+__builtins__['_print'] = _print
+fo = open("output.acmicpc", 'r+', encoding="utf-8", errors="ignore") if os.stat("output.acmicpc").st_size != 0 else None
+
+current_file = None
+class fo_iter :
+  def __init__(self, *_) :
+    self.iter = iter(fo) if fo else None
+
+  def read(self) :
+    if not self.iter : return
+    while True :
+      s = fo.readline()
+      if s :
+        if s.rstrip() in (";;"): continue #주석 구현
+        if s.rstrip() in ("\\next"): 
+          global case_num
+          case_num += 1
+          continue
+        return s
+      else :
+        raise StopIteration
+
+foi = fo_iter()
+judge_status = {}
+def set_current_file(file_name) :
+  global current_file, case_num
+  current_file = file_name
+
+def init_judge() :
+  if not fo: return
+  fo.seek(0)
+
+def judge(*args, **kwargs) :
+  sep = kwargs.get('sep', ' ')
+  end = kwargs.get('end', '\n')
+  supress = kwargs.get('supress', False)
+
+  line = sep.join(map(str, list(args))) + end
+  if fo :
+    try :
+      answer = foi.read()
+    except :
+      answer = None
+      pass
+    if line.strip() != answer.strip() : 
+      judge_status[current_file] = "WA"
+    else :
+      judge_status[current_file] = "AC"
+
+  if not supress :
+    _print(*args, **kwargs)
+
+
+__builtins__['print'] = judge
 #####################################################
 """
 import psutil
@@ -65,12 +121,12 @@ def memory() :
   after_memory = current_process.memory_info()[1]
   #left_memory = after_memory - before_memory #삭제되지 않은 메모리
 
-  print(f"BEFORE : {before_memory} B")
-  print(f"AFTER  : {after_memory} B")
-  #print(f"LEFT   : {left_memory} B")
+  _print(f"BEFORE : {before_memory} B")
+  _print(f"AFTER  : {after_memory} B")
+  #_print(f"LEFT   : {left_memory} B")
 """
 def memory(x) : #단위:Byte
-  print(sys.getsizeof(x))
+  _print(sys.getsizeof(x))
 
 __builtins__['memory'] = memory
 #####################################################
@@ -134,14 +190,14 @@ def sizeof_fmt(num, suffix="B"):
     num /= 1024.0
   return f"{num:.1f}Yi{suffix}"
 
-__builtins__['size'] = lambda x: print(sizeof_fmt(get_size(x)))
+__builtins__['size'] = lambda x: _print(sizeof_fmt(get_size(x)))
 ##################################################
 """
 import resource
   
 def limit_memory(maxsize):
   soft, hard = resource.getrlimit(resource.RLIMIT_AS)
-  print(soft, hard)
+  _print(soft, hard)
   #resource.setrlimit(resource.RLIMIT_AS, (maxsize, hard))
 
 MB = 1024 * 1024
@@ -165,7 +221,7 @@ def _is_prime(n):
     f += 6
   return True
 def is_prime(n) :
-  print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
+  _print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
 
 #최소공배수
 def lcm(m, n) :
@@ -190,17 +246,17 @@ def pprint(obj, **kwargs) :
   """2차원 이상의 배열을 보기좋게 출력"""
   from numpy import set_printoptions, array
   set_printoptions(linewidth = 999)
-  print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
+  _print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
 __builtins__['pprint'] = pprint
 
 nprint_left = None
 def nprint(cnt, *args, **kwargs) : 
-  """각 case마다 cnt만큼만 print"""
+  """각 case마다 cnt만큼만 _print"""
   global nprint_left
   if nprint_left is None: nprint_left = cnt 
   elif nprint_left == 0 : return
 
-  print(*args, **kwargs)
+  _print(*args, **kwargs)
   nprint_left -= 1
 __builtins__['nprint'] = nprint
 
