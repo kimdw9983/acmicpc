@@ -67,10 +67,7 @@ class fo_iter :
       s = fo.readline()
       if s :
         if s.rstrip() in (";;"): continue #주석 구현
-        if s.rstrip() in ("\\next"): 
-          global case_num
-          case_num += 1
-          continue
+        if s.rstrip() in ("\\next"):  continue #필요한진 모르겠음
         return s
       else :
         raise StopIteration
@@ -78,7 +75,7 @@ class fo_iter :
 foi = fo_iter()
 judge_status = {}
 def set_current_file(file_name) :
-  global current_file, case_num
+  global current_file
   current_file = file_name
 
 def init_judge() :
