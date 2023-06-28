@@ -187,6 +187,7 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks
 
 input.acmicpc
+output.acmicpc
 output
 pre_test.py
 test.py
