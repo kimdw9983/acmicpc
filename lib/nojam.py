@@ -47,10 +47,10 @@ __builtins__['input'] = hack_input()
 io.BytesIO = hack_BytesIO
 
 def debug(*args, **kwargs) :
-  args = [f"{yellow}[DEBUG]{reset}\t{magenta}"] + list(args) + [reset]
+  args = [f"{yellow}{reset}{magenta}"] + list(args) + [reset]
   print(*args, **kwargs)
 
-__builtins__['debug'] = debug #TODO: 어느파일껀지
+__builtins__['debug'] = debug
 #####################################################
 """
 import psutil
