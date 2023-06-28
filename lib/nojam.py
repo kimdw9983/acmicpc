@@ -1,3 +1,9 @@
+magenta = "\x1b[35;20m"
+green = "\x1b[32;20m"
+blue = "\x1b[34m"
+yellow = "\x1b[33;20m"
+red = "\x1b[31;20m"
+reset = "\x1b[0m"
 #####################################################
 import sys, datetime, os, io
 f = open("input.acmicpc", 'r+', encoding="utf-8", errors="ignore") #파일의 iterator를 공유한다.
@@ -40,7 +46,11 @@ sys.stdin.readline = hack_stdin()
 __builtins__['input'] = hack_input()
 io.BytesIO = hack_BytesIO
 
-__builtins__['debug'] = print #TODO: 어느파일껀지
+def debug(*args, **kwargs) :
+  args = [f"{yellow}[DEBUG]{reset}\t{magenta}"] + list(args) + [reset]
+  print(*args, **kwargs)
+
+__builtins__['debug'] = debug #TODO: 어느파일껀지
 #####################################################
 """
 import psutil
