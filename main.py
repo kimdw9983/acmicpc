@@ -32,9 +32,9 @@ def invoke(module: ModuleType, fname: str):
     elapsed = time.time()
     try :
       importlib.reload(module)
-      status = judge_status.get(fname, "AC")
-      is_ac = status == "AC"
-      _print(f"{green if is_ac else red}[ {status} ] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}{reset}")
+      status = judge_status.get(fname, "DONE")
+      is_ac = status != "WA"
+      _print(f"{green if is_ac else red}[{status: ^4}] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}{reset}")
     except (NameError, SyntaxError, StopIteration) as e:
       _print(f"{red}[FAIL] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}\t{magenta}{type(e).__name__}{reset}")
       # seek()

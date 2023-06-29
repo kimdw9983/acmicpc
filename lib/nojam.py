@@ -98,6 +98,8 @@ def judge(*args, **kwargs) :
       judge_status[current_file] = "WA"
     else :
       judge_status[current_file] = "AC"
+  else :
+    judge_status[current_file] = "DONE"
 
   if not supress :
     _print(*args, **kwargs)
