@@ -45,15 +45,11 @@ __builtins__['seek'] = seek
 sys.stdin.readline = hack_stdin()
 __builtins__['input'] = hack_input()
 io.BytesIO = hack_BytesIO
-
-
+#####################################################
 def debug(*args, **kwargs) :
   args = [f"{yellow}{reset}{magenta}"] + list(args) + [reset]
   _print(*args, **kwargs)
 __builtins__['debug'] = debug
-#####################################################
-_print = __builtins__['print']
-__builtins__['_print'] = _print
 fo = open("output.acmicpc", 'r+', encoding="utf-8", errors="ignore") if os.stat("output.acmicpc").st_size != 0 else None
 
 current_file = None
@@ -82,30 +78,38 @@ def init_judge() :
   if not fo: return
   fo.seek(0)
 
-def judge(*args, **kwargs) :
+def make_line(*args, **kwargs) :
   sep = kwargs.get('sep', ' ')
   end = kwargs.get('end', '\n')
-  supress = kwargs.get('supress', False)
 
   line = sep.join(map(str, list(args))) + end
+  _write(line)
+
+def judge_print(*args, **kwargs) :
+  line = make_line(*args, **kwargs)
+  judge_line(line)
+
+def judge_write(line: str):
+  _write(line)
+  judge_line(line)
+
+def judge_line(line: str) :
   if fo :
     try :
       answer = foi.read()
     except :
-      answer = None
-      pass
+      answer = ""
+
     if line.strip() != answer.strip() : 
+      debug(answer.strip())
       judge_status[current_file] = "WA"
-    else :
-      judge_status[current_file] = "AC"
   else :
     judge_status[current_file] = "DONE"
 
-  if not supress :
-    _print(*args, **kwargs)
-
-
-__builtins__['print'] = judge
+_print = __builtins__['_print'] = make_line
+_write = sys.stdout.write
+sys.stdout.write = judge_write
+__builtins__['print'] = judge_print
 #####################################################
 """
 import psutil
@@ -205,41 +209,40 @@ limit_memory(256 * MB)
 __builtins__['max_memory'] = limit_memory
 """
 ##################################################
-import math
-def _is_prime(n):
-  #https://stackoverflow.com/questions/15285534/isprime-function-for-python-language
-  if n == 2 or n == 3: return True
-  if n < 2 or n % 2 == 0: return False
-  if n < 9: return True
-  if n % 3 == 0: return False
-  r = math.isqrt(n)
-  f = 5
-  while f <= r:
-    if n % f == 0: return False
-    if n % (f + 2) == 0: return False
-    f += 6
-  return True
-def is_prime(n) :
-  _print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
+# import math
+# def _is_prime(n):
+#   if n == 2 or n == 3: return True
+#   if n < 2 or n % 2 == 0: return False
+#   if n < 9: return True
+#   if n % 3 == 0: return False
+#   r = math.isqrt(n)
+#   f = 5
+#   while f <= r:
+#     if n % f == 0: return False
+#     if n % (f + 2) == 0: return False
+#     f += 6
+#   return True
+# def is_prime(n) :
+#   _print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
 
-#최소공배수
-def lcm(m, n) :
-  return m*n//math.gcd(m,n)
+# #최소공배수
+# def lcm(m, n) :
+#   return m*n//math.gcd(m,n)
 
-def divisors(n : int) : #n의 모든 약수 출력 O(n^.5)
-  if not n :
-    return [0]
-  l = []
-  for i in range(1, math.isqrt(n) + 1): 
-    if not n % i:            
-      l.append(i)
-      l.append(n//i)
-  return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
+# def divisors(n : int) : #n의 모든 약수 출력 O(n^.5)
+#   if not n :
+#     return [0]
+#   l = []
+#   for i in range(1, math.isqrt(n) + 1): 
+#     if not n % i:            
+#       l.append(i)
+#       l.append(n//i)
+#   return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
 
-__builtins__['is_prime'] = is_prime
-__builtins__['lcm'] = lcm
-__builtins__['gcd'] = math.gcd
-__builtins__['divisors'] = divisors
+# __builtins__['is_prime'] = is_prime
+# __builtins__['lcm'] = lcm
+# __builtins__['gcd'] = math.gcd
+# __builtins__['divisors'] = divisors
 ##########################################################
 def pprint(obj, **kwargs) :
   """2차원 이상의 배열을 보기좋게 출력"""

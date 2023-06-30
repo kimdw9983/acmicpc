@@ -31,8 +31,9 @@ def invoke(module: ModuleType, fname: str):
     prev_fp = first_fp
     elapsed = time.time()
     try :
+      judge_status[fname] = "AC"
       importlib.reload(module)
-      status = judge_status.get(fname, "DONE")
+      status = judge_status[fname]
       is_ac = status != "WA"
       _print(f"{green if is_ac else red}[{status: ^4}] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}{reset}")
     except (NameError, SyntaxError, StopIteration) as e:
