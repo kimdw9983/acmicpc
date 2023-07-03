@@ -1,4 +1,3 @@
-import time
 from lib.nojam import *
 
 try : #필요하면 pre_test.py를 만들것.
@@ -6,13 +5,13 @@ try : #필요하면 pre_test.py를 만들것.
   current_file = "pre_test"
   import pre_test
   # _print(f"{green}[DONE]\t{blue}pre_test.py{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
-except :
+except ModuleNotFoundError:
   pass
 
 try :
   input()
 except : 
-  pass
+  raise
 
 for fname in (
               "test", 
