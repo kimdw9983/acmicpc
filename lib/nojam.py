@@ -319,10 +319,7 @@ def fprint(*s, sep=" ", end="\n") :
   timestamp = datetime.datetime.now()
   fname = timestamp.strftime("%Y%m%d_%H:%M:%S")
 
-  line = ""
-  for w in s :
-    line += w.__str__() + sep
-  line += end
+  line = f"{sep.join(s)}{end}"
   with open("output/"+fname, "a") as f:
     f.write(line)
 __builtins__['fprint'] = fprint
