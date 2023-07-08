@@ -132,6 +132,7 @@ def make_line(*args, **kwargs) :
 
   line = sep.join(map(str, list(args))) + end
   _write(line)
+  return line
 
 def judge_print(*args, **kwargs) :
   line = make_line(*args, **kwargs)
