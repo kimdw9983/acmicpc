@@ -1,6 +1,6 @@
 from lib.nojam import *
 
-try : #필요하면 pre_test.py를 만들것.
+try :
   elapsed = time.time()
   current_file = "pre_test"
   import pre_test
