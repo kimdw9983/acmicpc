@@ -243,6 +243,7 @@ def sizeof_fmt(num, suffix="B"):
   return f"{num:.1f}Yi{suffix}"
 
 __builtins__['size'] = lambda x: _print(sizeof_fmt(get_size(x)))
+__builtins__['get_size'] = lambda x: _print(sizeof_fmt(get_size(x)))
 ##################################################
 """
 import resource
