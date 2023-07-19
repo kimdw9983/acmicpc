@@ -47,6 +47,8 @@ def invoke(module: ModuleType, fname: str):
       is_ac = status != "WA"
       _print(f"{green if is_ac else red}[{status: ^4}] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}{reset}")
     except (NameError, SyntaxError, StopIteration) as e:
+      if type(e) is UnboundLocalError : #UnboundedLocalError는 NameError의 부분 집합이지만 raise하기에 충분함
+        raise e
       _print(f"{red}[FAIL] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}\t{magenta}{type(e).__name__}{reset}")
       # seek()
     init_nprint()
