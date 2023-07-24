@@ -144,7 +144,7 @@ def judge_write(line: str):
   _write(line)
   judge_line(line)
 
-def judge_line(line: str) :
+def judge_line(line: str) : #TODO: fstring으로 개행문자가 포함된 line이 들어오면 한줄로 인식하는 문제
   if fo :
     try :
       answer = foi.read()
