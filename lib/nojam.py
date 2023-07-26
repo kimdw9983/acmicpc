@@ -152,7 +152,7 @@ def judge_line(line: str) : #TODO: fstring으로 개행문자가 포함된 line�
       answer = ""
 
     if line.strip() != answer.strip() : 
-      debug(answer.strip())
+      debug(red+answer.strip())
       judge_status[current_file] = "WA"
   else :
     judge_status[current_file] = "DONE"
