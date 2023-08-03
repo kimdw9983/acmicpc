@@ -296,11 +296,16 @@ __builtins__['max_memory'] = limit_memory
 # __builtins__['gcd'] = math.gcd
 # __builtins__['divisors'] = divisors
 ##########################################################
+import json
 def pprint(obj, **kwargs) :
   """2차원 이상의 배열을 보기좋게 출력"""
-  from numpy import set_printoptions, array
-  set_printoptions(linewidth = 999)
-  _print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
+  # from numpy import set_printoptions, array
+  # set_printoptions(linewidth = 999)
+  # _print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
+  output = json.dumps(obj, ensure_ascii=False, check_circular=False)
+  output = output.replace("],", "],\n").replace("],\n\n", "],\n").replace("[[", "[\n[").replace("]]", "]\n]")
+  debug(output, end="\n\n", **kwargs)
+
 __builtins__['pprint'] = pprint
 
 nprint_left = None
