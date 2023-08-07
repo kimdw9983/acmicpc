@@ -304,7 +304,7 @@ def pprint(obj, **kwargs) :
   # _print(array(obj, copy=False, dtype=object, **kwargs), end="\n\n")
   output = json.dumps(obj, ensure_ascii=False, check_circular=False)
   output = output.replace("],", "],\n").replace("],\n\n", "],\n").replace("[[", "[\n[").replace("]]", "]\n]")
-  debug(output, end="\n\n", **kwargs)
+  debug(output, end="\n", **kwargs)
 
 __builtins__['pprint'] = pprint
 
