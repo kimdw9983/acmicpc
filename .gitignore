@@ -188,3 +188,4 @@ pyrightconfig.json
 
 output
 test*.py
+.cph
