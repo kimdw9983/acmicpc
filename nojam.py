@@ -1,29 +1,27 @@
-magenta = "\x1b[35;20m"
-green = "\x1b[32;20m"
-blue = "\x1b[34m"
-yellow = "\x1b[33;20m"
-red = "\x1b[31;20m"
-reset = "\x1b[0m"
-#####################################################
-import importlib, sys, time
+from util import *
+__builtins__['size'] = lambda x: _print(sizeof_fmt(get_size(x)))
+__builtins__['get_size'] = lambda x: _print(sizeof_fmt(get_size(x)))
+
+import importlib.util, sys, time
 from types import ModuleType
-def get_module(name, package=None): #module객체를 실행시키지 않고 가지고 옴
+def get_module(name, location=None, package=None): #module객체를 실행시키지 않고 가지고 옴
   #https://docs.python.org/3/library/importlib.html#importing-a-source-file-directly
   absolute_name = importlib.util.resolve_name(name, package)
   module = sys.modules.get(absolute_name)
-  if module: return module
-
-  for finder in sys.meta_path:
-    spec = finder.find_spec(absolute_name, None)
-    if spec is not None:
-      break
-  if not spec : return
+  if module: return None, module
+  
+  spec = importlib.util.spec_from_file_location(name, location)
+  # for finder in sys.meta_path:
+  #   spec = finder.find_spec(absolute_name, None)
+  #   if spec is not None:
+  #     break
+  if not spec : return False
   module = importlib.util.module_from_spec(spec)
   sys.modules[absolute_name] = module
 
-  return module
+  return spec, module
 
-def invoke(module: ModuleType, fname: str):
+def invoke(module: ModuleType, fname: str, spec=None):
   global fp
   tnum = 1
   
@@ -42,7 +40,7 @@ def invoke(module: ModuleType, fname: str):
     elapsed = time.time()
     try :
       judge_status[fname] = "AC"
-      importlib.reload(module)
+      spec.loader.exec_module(module)
       status = judge_status[fname]
       is_ac = status != "WA"
       _print(f"{green if is_ac else red}[{status: ^4}] {blue}{module.__name__}.py{reset}\t{yellow}CASE {str(tnum)}{reset} elapsed time: {yellow}{time.time() - elapsed}{reset}")
@@ -56,7 +54,7 @@ def invoke(module: ModuleType, fname: str):
       return
 #####################################################
 import sys, datetime, os, io
-f = open("input.acmicpc", 'r+', encoding="utf-8", errors="ignore") #파일의 iterator를 공유한다.
+f = open("testcase/input.acmicpc", 'r+', encoding="utf-8", errors="ignore") #파일의 iterator를 공유한다.
 
 class f_iter :
   def __init__(self, *_) :
@@ -100,7 +98,7 @@ def debug(*args, **kwargs) :
   args = [f"{yellow}{reset}{magenta}"] + list(args) + [reset]
   _print(*args, **kwargs)
 __builtins__['debug'] = debug
-fo = open("output.acmicpc", 'r+', encoding="utf-8", errors="ignore") if os.stat("output.acmicpc").st_size != 0 else None
+fo = open("testcase/output.acmicpc", 'r+', encoding="utf-8", errors="ignore") if os.stat("testcase/output.acmicpc").st_size != 0 else None
 
 current_file = None
 class fo_iter :
@@ -161,140 +159,6 @@ _print = __builtins__['_print'] = make_line
 _write = sys.stdout.write
 sys.stdout.write = judge_write
 __builtins__['print'] = judge_print
-#####################################################
-"""
-import psutil
-import os
-
-PID = os.getpid()
-current_process = psutil.Process(PID)
-before_memory = current_process.memory_info()[1]
-
-def memory() :
-  global before_memory
-  after_memory = current_process.memory_info()[1]
-  #left_memory = after_memory - before_memory #삭제되지 않은 메모리
-
-  _print(f"BEFORE : {before_memory} B")
-  _print(f"AFTER  : {after_memory} B")
-  #_print(f"LEFT   : {left_memory} B")
-"""
-def memory(x) : #단위:Byte
-  _print(sys.getsizeof(x))
-
-__builtins__['memory'] = memory
-#####################################################
-#https://help.acmicpc.net/judge/rte/RecursionError
-#BOJ의 채점 서버에서 이 값은 1,000으로 되어 있습니다.
-sys.setrecursionlimit(1000)
-"""
-import sys
-sys.setrecursionlimit(10**6)
-"""
-##################################################
-#https://stackoverflow.com/questions/492519/timeout-on-a-function-call
-import errno
-import os
-import signal
-import functools
-
-class TimeoutError(Exception):
-  pass
-
-def timeout(seconds=1, error_message=os.strerror(errno.ETIME)):
-  def decorator(func):
-    def _handle_timeout(signum, frame):
-      raise TimeoutError(error_message)
-
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-      signal.signal(signal.SIGALRM, _handle_timeout)
-      signal.alarm(seconds)
-      try:
-        result = func(*args, **kwargs)
-      finally:
-        signal.alarm(0)
-      return result
-    return wrapper
-  return decorator
-
-__builtins__['timeout'] = timeout
-
-def get_size(obj, seen=None):
-  size = sys.getsizeof(obj)
-  if seen is None:
-    seen = set()
-  obj_id = id(obj)
-  if obj_id in seen:
-    return 0
-  seen.add(obj_id)
-  if isinstance(obj, dict):
-    size += sum([get_size(v, seen) for v in obj.values()])
-    size += sum([get_size(k, seen) for k in obj.keys()])
-  elif hasattr(obj, '__dict__'):
-    size += get_size(obj.__dict__, seen)
-  elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):
-    size += sum([get_size(i, seen) for i in obj])
-  return size
-
-def sizeof_fmt(num, suffix="B"):
-  for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-    if abs(num) < 1024.0:
-      return f"{num:3.1f}{unit}{suffix}"
-    num /= 1024.0
-  return f"{num:.1f}Yi{suffix}"
-
-__builtins__['size'] = lambda x: _print(sizeof_fmt(get_size(x)))
-__builtins__['get_size'] = lambda x: _print(sizeof_fmt(get_size(x)))
-##################################################
-"""
-import resource
-  
-def limit_memory(maxsize):
-  soft, hard = resource.getrlimit(resource.RLIMIT_AS)
-  _print(soft, hard)
-  #resource.setrlimit(resource.RLIMIT_AS, (maxsize, hard))
-
-MB = 1024 * 1024
-limit_memory(256 * MB)
-
-__builtins__['max_memory'] = limit_memory
-"""
-##################################################
-# import math
-# def _is_prime(n):
-#   if n == 2 or n == 3: return True
-#   if n < 2 or n % 2 == 0: return False
-#   if n < 9: return True
-#   if n % 3 == 0: return False
-#   r = math.isqrt(n)
-#   f = 5
-#   while f <= r:
-#     if n % f == 0: return False
-#     if n % (f + 2) == 0: return False
-#     f += 6
-#   return True
-# def is_prime(n) :
-#   _print(f"{n}은 소수{'맞음 ㅇㅇ' if _is_prime(n) else '아님 ㄴㄴ'}")
-
-# #최소공배수
-# def lcm(m, n) :
-#   return m*n//math.gcd(m,n)
-
-# def divisors(n : int) : #n의 모든 약수 출력 O(n^.5)
-#   if not n :
-#     return [0]
-#   l = []
-#   for i in range(1, math.isqrt(n) + 1): 
-#     if not n % i:            
-#       l.append(i)
-#       l.append(n//i)
-#   return l[::2] + l[-3 if l[-1]==l[-2] else -1::-2]
-
-# __builtins__['is_prime'] = is_prime
-# __builtins__['lcm'] = lcm
-# __builtins__['gcd'] = math.gcd
-# __builtins__['divisors'] = divisors
 ##########################################################
 import json
 def pprint(obj, **kwargs) :
@@ -323,12 +187,41 @@ def init_nprint():
   global nprint_left
   nprint_left = None
 
+import json
 def fprint(*s, sep=" ", end="\n") :
   """출력을 output/timestamp의 형식의 파일으로 저장"""
   timestamp = datetime.datetime.now()
-  fname = timestamp.strftime("%Y%m%d_%H:%M:%S")
+  fname = timestamp.strftime("%Y_%m_%d_%H_%M_%S")
 
-  line = f"{sep.join(s)}{end}"
+  x = json.dump(s)
+
+  line = f"{sep.join(x)}{end}"
   with open("output/"+fname, "a") as f:
     f.write(line)
 __builtins__['fprint'] = fprint
+
+# try :
+#   elapsed = time.time()
+#   current_file = "pre_test"
+#   import pre_test
+#   # _print(f"{green}[DONE]\t{blue}pre_test.py{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
+# except ModuleNotFoundError:
+#   pass
+
+try :
+  input()
+except : 
+  raise
+
+import glob, pathlib
+for s in glob.glob("source/*.py") : 
+  abspath = str(pathlib.Path(__file__).parent.resolve())
+  path = os.path.join(abspath, "source")
+  fname = s.split("\\")[-1].split(".")[0]
+  spec, module = get_module(fname, os.path.join(path, fname + ".py"))
+  if not module : continue
+
+  seek()
+  set_current_file(fname)
+  init_judge()
+  invoke(module, fname, spec)
