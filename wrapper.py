@@ -1,6 +1,6 @@
 from util import *
+import json, os, pathlib, psutil, time, io
 
-import json, os, pathlib, psutil
 args = json.loads(sys.argv[1]) #metadata
 
 source: str = args['source']
@@ -10,12 +10,12 @@ fname = source.split("\\")[-1].split(".")[0]
 spec, module = get_module(fname, os.path.join(path, fname + ".py"))
 if not module: exit(1)
 
-language = args.get('language')
+class hack_bytesIO(io.BytesIO) :
+  def readline(self) :
+    return sys.stdin.buffer.readline()
+io.BytesIO = hack_bytesIO
 
 current_process = psutil.Process()
-
-# Import and run the target script
-import time
 before_memory = current_process.memory_info()
 start_time = time.time()
 spec.loader.exec_module(module)
