@@ -2,24 +2,8 @@ from util import *
 __builtins__['size'] = lambda x: _print(sizeof_fmt(get_size(x)))
 __builtins__['get_size'] = lambda x: _print(sizeof_fmt(get_size(x)))
 
-import importlib.util, sys, time
+import sys, time
 from types import ModuleType
-def get_module(name, location=None, package=None): #module객체를 실행시키지 않고 가지고 옴
-  #https://docs.python.org/3/library/importlib.html#importing-a-source-file-directly
-  absolute_name = importlib.util.resolve_name(name, package)
-  module = sys.modules.get(absolute_name)
-  if module: return None, module
-  
-  spec = importlib.util.spec_from_file_location(name, location)
-  # for finder in sys.meta_path:
-  #   spec = finder.find_spec(absolute_name, None)
-  #   if spec is not None:
-  #     break
-  if not spec : return False
-  module = importlib.util.module_from_spec(spec)
-  sys.modules[absolute_name] = module
-
-  return spec, module
 
 def invoke(module: ModuleType, fname: str, spec=None):
   global fp
