@@ -1,3 +1,4 @@
+bold = "\x1b[1m"
 magenta = "\x1b[35;20m"
 green = "\x1b[32;20m"
 blue = "\x1b[34m"
@@ -5,8 +6,8 @@ yellow = "\x1b[33;20m"
 red = "\x1b[31;20m"
 reset = "\x1b[0m"
 
-METADATA_SEPARATOR = b'\x1e' #record separator
-COMPILE_ERROR_SIGNAL = b"\x1F" #unit separator
+METADATA_SEPARATOR = '\x1e' #record separator
+COMPILE_ERROR_SIGNAL = '\x1F' #unit separator
 
 import sys
 def get_size(obj, seen=None):

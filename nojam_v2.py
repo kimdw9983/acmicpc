@@ -60,18 +60,18 @@ for dir in glob.glob(f"{SOURCE_DIR}/*.py") :
     stdout, stderr = proc.communicate(input=TC)
     elapsed = int((time.time() - start_time) * 1000)
 
-    parsed = stdout.decode().split("b'\\x1e'")
+    parsed = stdout.split(METADATA_SEPARATOR.encode())
     if stderr :
-      print(red + "Standard output Error: ", stderr + reset)
+      print(red + "Standard output Error\n", stderr + reset)
     elif len(parsed) == 1 :
-      match parsed:
-        case [COMPILE_ERROR_SIGNAL]:
-          print(red + "Compile Error" + reset)
-          print(b"\n".join(stdout.split(b"\n")[1:]).decode())
-        case _:
-          print(parsed)
-          print(red + "Runtime Error" + reset)
+      if COMPILE_ERROR_SIGNAL.encode() in parsed[0] :
+        print(red + "Compile Error" + reset)
+        print(b"\n".join(stdout.split(b"\n")[1:]).decode())
+      else :
+        print(red + "Runtime Error" + reset, sep="\n")
     else :
       output, result = parsed
-      if output : print(output)
-      print(result)
+      if output : print(output.decode())
+
+      #TODO: judge output and calculate result
+      print(result.decode())
