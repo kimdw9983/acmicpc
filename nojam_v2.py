@@ -62,13 +62,13 @@ for dir in glob.glob(f"{SOURCE_DIR}/*.py") :
 
     parsed = stdout.split(METADATA_SEPARATOR.encode())
     if stderr :
-      print(red + "Standard output Error\n", stderr + reset)
+      print(bold + red + "[Standard output Error]\n", stderr + reset)
     elif len(parsed) == 1 :
       if COMPILE_ERROR_SIGNAL.encode() in parsed[0] :
-        print(red + "Compile Error" + reset)
+        print(red + "[Compile Error]" + reset)
         print(b"\n".join(stdout.split(b"\n")[1:]).decode())
       else :
-        print(red + "Runtime Error" + reset, sep="\n")
+        print(red + "[Runtime Error]" + reset, sep="\n")
     else :
       output, result = parsed
       if output : print(output.decode())
