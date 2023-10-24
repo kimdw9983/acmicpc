@@ -6,6 +6,7 @@ red = "\x1b[31;20m"
 reset = "\x1b[0m"
 
 METADATA_SEPARATOR = b'\x1e' #record separator
+COMPILE_ERROR_SIGNAL = b"\x1F" #unit separator
 
 import sys
 def get_size(obj, seen=None):

@@ -7,12 +7,12 @@ TESTCASE_DIR = "testcase"
 input_testcase = []
 output_testcase = []
 def parse_acmicpc(file, is_input) :
-  with open(file, 'r') as f :
+  with open(file, 'rb') as f : #parse stream in bytes
     stream = f.read()
     if not stream: return
-    pattern = re.compile(r'(?<!\\)next|^\s*;;.*$', re.MULTILINE)
+    pattern = re.compile(rb'(?<!\\)next|^\s*;;.*$', re.MULTILINE)
     TC = pattern.split(stream)
-    TC = [s.lstrip('\n').encode() for s in TC if s.lstrip('\n')]
+    TC = [s.lstrip(b'\n') for s in TC if s.lstrip(b'\n')]
     
     if is_input :
       input_testcase.extend(TC)
@@ -25,18 +25,22 @@ for output in glob.glob(f"{TESTCASE_DIR}/output.acmicpc") :
   parse_acmicpc(output, False)
 
 def parse_standard(file, is_input) :
-  with open(file, 'r') as f :
+  with open(file, 'rb') as f :
     TC = f.read()
     if not TC: return
     if is_input :
-      input_testcase.append(TC.encode())
+      input_testcase.append(TC)
     else :
-      output_testcase.append(TC.encode())
+      output_testcase.append(TC)
 
 for input in glob.glob(f"{TESTCASE_DIR}/*.in") :
   parse_standard(input, True)
 for output in glob.glob(f"{TESTCASE_DIR}/*.out") :
   parse_standard(output, False)
+
+#if there's no input, just put dummy to invoke testcases.
+if not input_testcase :
+  input_testcase.append(b"")
 
 import time
 for dir in glob.glob(f"{SOURCE_DIR}/*.py") : 
@@ -56,6 +60,18 @@ for dir in glob.glob(f"{SOURCE_DIR}/*.py") :
     stdout, stderr = proc.communicate(input=TC)
     elapsed = int((time.time() - start_time) * 1000)
 
-    output, result = stdout.decode().split("b'\\x1e'")
-    if output : print(output)
-    print(result)
+    parsed = stdout.decode().split("b'\\x1e'")
+    if stderr :
+      print(red + "Standard output Error: ", stderr + reset)
+    elif len(parsed) == 1 :
+      match parsed:
+        case [COMPILE_ERROR_SIGNAL]:
+          print(red + "Compile Error" + reset)
+          print(b"\n".join(stdout.split(b"\n")[1:]).decode())
+        case _:
+          print(parsed)
+          print(red + "Runtime Error" + reset)
+    else :
+      output, result = parsed
+      if output : print(output)
+      print(result)
