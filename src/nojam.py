@@ -184,23 +184,15 @@ def fprint(*s, sep=" ", end="\n") :
     f.write(line)
 __builtins__['fprint'] = fprint
 
-# try :
-#   elapsed = time.time()
-#   current_file = "pre_test"
-#   import pre_test
-#   # _print(f"{green}[DONE]\t{blue}pre_test.py{reset}, elapsed time: {yellow}{time.time() - elapsed}{reset}")
-# except ModuleNotFoundError:
-#   pass
-
 try :
   input()
 except : 
   raise
 
 import glob, pathlib
-for s in glob.glob("source/*.py") : 
-  abspath = str(pathlib.Path(__file__).parent.resolve())
-  path = os.path.join(abspath, "source")
+for s in glob.glob(f"{TESTS_DIR}/*.py") : 
+  abspath = str(pathlib.Path(__file__).parent.parent.resolve())
+  path = os.path.join(abspath, TESTS_DIR)
   fname = s.split("\\")[-1].split(".")[0]
   spec, module = get_module(fname, os.path.join(path, fname + ".py"))
   if not module : continue

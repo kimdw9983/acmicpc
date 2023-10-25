@@ -9,6 +9,9 @@ reset = "\x1b[0m"
 METADATA_SEPARATOR = '\x1e' #record separator
 COMPILE_ERROR_SIGNAL = '\x1F' #unit separator
 
+TESTS_DIR = "tests"
+TESTCASE_DIR = "testcase"
+
 import sys
 def get_size(obj, seen=None):
   size = sys.getsizeof(obj)

@@ -5,7 +5,7 @@
       "name": "main",
       "type": "python",
       "request": "launch",
-      "program": "main.py",
+      "program": "src/main.py",
       "args": [],
       "console": "integratedTerminal",
       "cwd": "",

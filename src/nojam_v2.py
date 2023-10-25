@@ -1,9 +1,6 @@
 from util import *
 import glob, os, re, json, subprocess
 
-SOURCE_DIR = "source"
-TESTCASE_DIR = "testcase"
-
 input_testcase = []
 output_testcase = []
 def parse_acmicpc(file, is_input) :
@@ -43,7 +40,7 @@ if not input_testcase :
   input_testcase.append(b"")
 
 import time
-for dir in glob.glob(f"{SOURCE_DIR}/*.py") : 
+for dir in glob.glob(f"{TESTS_DIR}/*.py") : 
   for idx, TC in enumerate(input_testcase) :
     metadata = {
       "source": dir, 
@@ -56,7 +53,7 @@ for dir in glob.glob(f"{SOURCE_DIR}/*.py") :
       "PYDEVD_DISABLE_FILE_VALIDATION": "1"
     })
     start_time = time.time()
-    proc = subprocess.Popen(["python", '-m', "wrapper", metadata], stdin=subprocess.PIPE, stdout=subprocess.PIPE, env=env)
+    proc = subprocess.Popen(["python", '-m', "src.wrapper", metadata], stdin=subprocess.PIPE, stdout=subprocess.PIPE, env=env)
     stdout, stderr = proc.communicate(input=TC)
     elapsed = int((time.time() - start_time) * 1000)
 

@@ -1,4 +1,4 @@
-from util import * #여러번 해야할 수 있음
+from src.util import * #여러번 해야할 수 있음
 import json, os, pathlib, psutil, time, io, datetime, traceback
 
 args = json.loads(sys.argv[1]) #metadata
@@ -6,8 +6,8 @@ args = json.loads(sys.argv[1]) #metadata
 sys.tracebacklimit = 1
 
 source: str = args['source']
-abspath = str(pathlib.Path(__file__).parent.resolve())
-path = os.path.join(abspath, "source")
+abspath = str(pathlib.Path(__file__).parent.parent.resolve())
+path = os.path.join(abspath, TESTS_DIR)
 fname = source.split("\\")[-1].split(".")[0]
 spec, module = get_module(fname, os.path.join(path, fname + ".py"))
 if not module: raise Exception("module not found")
@@ -35,7 +35,7 @@ before_memory = current_process.memory_info()
 start_time = time.time()
 try :
   spec.loader.exec_module(module)
-except SyntaxError as e :
+except (SyntaxError, FileNotFoundError) as e :
   print(COMPILE_ERROR_SIGNAL)
   traceback.print_exc(1) #also prints PEP-657 – Include Fine Grained Error Locations in Tracebacks 
   sys.exit(0)
