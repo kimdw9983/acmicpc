@@ -10,7 +10,7 @@ METADATA_SEPARATOR = '\x1e' #record separator
 COMPILE_ERROR_SIGNAL = '\x1F' #unit separator
 
 TESTS_DIR = "tests"
-TESTCASE_DIR = f"testcases"
+TESTCASE_DIR = "testcases"
 
 import sys
 def get_size(obj, seen=None):
