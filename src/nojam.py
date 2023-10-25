@@ -38,7 +38,7 @@ def invoke(module: ModuleType, fname: str, spec=None):
       return
 #####################################################
 import sys, datetime, os, io
-f = open("testcase/input.acmicpc", 'r+', encoding="utf-8", errors="ignore") #파일의 iterator를 공유한다.
+f = open(f"{TESTCASE_DIR}/input.acmicpc", 'r+', encoding="utf-8", errors="ignore") #파일의 iterator를 공유한다.
 
 class f_iter :
   def __init__(self, *_) :
@@ -82,7 +82,7 @@ def debug(*args, **kwargs) :
   args = [f"{yellow}{reset}{magenta}"] + list(args) + [reset]
   _print(*args, **kwargs)
 __builtins__['debug'] = debug
-fo = open("testcase/output.acmicpc", 'r+', encoding="utf-8", errors="ignore") if os.stat("testcase/output.acmicpc").st_size != 0 else None
+fo = open(f"{TESTCASE_DIR}/output.acmicpc", 'r+', encoding="utf-8", errors="ignore") if os.stat(f"{TESTCASE_DIR}/output.acmicpc").st_size != 0 else None
 
 current_file = None
 class fo_iter :
