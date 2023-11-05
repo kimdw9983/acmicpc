@@ -3,7 +3,7 @@ import json, os, pathlib, psutil, time, io, datetime, traceback
 
 args = json.loads(sys.argv[1]) #metadata
 # TODO: depend wheather traceback mode or not
-sys.tracebacklimit = 1
+sys.tracebacklimit = 2
 
 source: str = args['source']
 abspath = str(pathlib.Path(__file__).parent.parent.resolve())
