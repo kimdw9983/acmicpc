@@ -16,7 +16,7 @@ tc_index = args['index']
 now = datetime.datetime.now()
 fname = now.strftime("%Y_%m_%d_%H_%M_%S") + f"_{fname}_TC{tc_index}.txt"
 def fprint(*args, filename=fname, sep=" ", end="\n"): 
-  with open("output/"+filename, "a+") as f:
+  with open(sys.path[0] + "output/"+filename, "a+") as f:
     f.write(sep.join(map(str, args)) + end)
 __builtins__.fprint = fprint
 
