@@ -19,6 +19,9 @@ def fprint(*args, filename=fname, sep=" ", end="\n"):
   with open(sys.path[0] + "output/"+filename, "a+") as f:
     f.write(sep.join(map(str, args)) + end)
 __builtins__.fprint = fprint
+__builtins__.size = lambda x: sizeof_fmt(get_size(x))
+__builtins__.get_size = lambda x: sizeof_fmt(get_size(x))
+
 
 class hack_bytesIO(io.BytesIO) : #소스 코드의 stdin 버퍼가 아닌, wrapper의 stdin 버퍼를 사용
   def readline(self) :
