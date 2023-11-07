@@ -20,7 +20,7 @@ def fprint(*args, filename=fname, sep=" ", end="\n"):
     f.write(sep.join(map(str, args)) + end)
 __builtins__.fprint = fprint
 
-class hack_bytesIO(io.BytesIO) :
+class hack_bytesIO(io.BytesIO) : #소스 코드의 stdin 버퍼가 아닌, wrapper의 stdin 버퍼를 사용
   def readline(self) :
     return sys.stdin.buffer.readline()
 io.BytesIO = hack_bytesIO
@@ -44,4 +44,4 @@ elapsed = int((time.time() - start_time) * 1000)
 print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
 after_memory = current_process.memory_info()
 
-print(f'메모리: {(after_memory.rss - before_memory.rss) // 1024}KB, 시간: {elapsed}ms')
+print(f'{blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB, {blue}ELAPSED:{reset} {elapsed}ms')

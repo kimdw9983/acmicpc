@@ -49,12 +49,12 @@ for dir in glob.glob(f"{TESTS_DIR}/*.py") :
     metadata = json.dumps(metadata)
 
     env = os.environ.copy()
-    env.update({ 
-      "PYDEVD_DISABLE_FILE_VALIDATION": "1"
-    })
+    # env.update({ 
+    #   "PYDEVD_DISABLE_FILE_VALIDATION": "1"
+    # })
+    proc = subprocess.Popen(["pypy", "-Xfrozen_modules=off", '-m', "src.wrapper", metadata], stdin=subprocess.PIPE, stdout=subprocess.PIPE, env=env)
     start_time = time.time()
-    proc = subprocess.Popen(["python", '-m', "src.wrapper", metadata], stdin=subprocess.PIPE, stdout=subprocess.PIPE, env=env)
-    stdout, stderr = proc.communicate(input=TC)
+    stdout, stderr = proc.communicate(input=TC, timeout=None)
     elapsed = int((time.time() - start_time) * 1000)
 
     parsed = stdout.split(METADATA_SEPARATOR.encode())

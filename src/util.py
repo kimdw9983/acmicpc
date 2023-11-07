@@ -36,8 +36,10 @@ def sizeof_fmt(num, suffix="B"):
       return f"{num:3.1f}{unit}{suffix}"
     num /= 1024.0
   return f"{num:.1f}Yi{suffix}"
-__builtins__['size'] = lambda x: sizeof_fmt(get_size(x))
-__builtins__['get_size'] = lambda x: sizeof_fmt(get_size(x))
+setattr(__builtins__, 'size', lambda x: sizeof_fmt(get_size(x)))
+setattr(__builtins__, 'get_size', lambda x: sizeof_fmt(get_size(x)))
+# __builtins__['size'] = lambda x: sizeof_fmt(get_size(x))
+# __builtins__['get_size'] = lambda x: sizeof_fmt(get_size(x))
 
 import importlib.util, sys
 def get_module(name, location=None, package=None): #module객체를 실행시키지 않고 가지고 옴
