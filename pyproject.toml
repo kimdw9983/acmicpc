@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "acmicpc"
+version = "0.1.0"
+description = "VSCode framework for Program Solving on acmicpc.com"
+authors = ["kimdw9983 <kimdw9983@gmail.com>"]
+license = "GNU General Public License v3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.5" #https://www.acmicpc.net/board/view/128134
+#pypy = "7.3.12 with GCC 10.2.1 20210130 (Red Hat 10.2.1-11)"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
