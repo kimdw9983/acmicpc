@@ -50,11 +50,13 @@ if __name__ == "__main__" :
       print(COMPILE_ERROR_SIGNAL)
       traceback.print_exc(1) #also prints PEP-657 – Include Fine Grained Error Locations in Tracebacks 
       sys.exit(0)
-    #capture debugger shutdown
-    del spec, module
+    #TODO: capture debugger shutdown(exit Code 0)
+
     elapsed = int((time.time() - start_time) * 1000)
+    del spec, module
 
     print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
     after_memory = CURRENT_PROCESS.memory_info()
 
     print(f'{blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB, {blue}ELAPSED:{reset} {elapsed}ms')
+    print(END_OF_TESTCASE)

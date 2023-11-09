@@ -7,6 +7,7 @@ red = "\x1b[31;20m"
 reset = "\x1b[0m"
 
 METADATA_SEPARATOR = '\x1e' #record separator
+END_OF_TESTCASE = '\x04' #end of transmission
 COMPILE_ERROR_SIGNAL = '\x1F' #unit separator
 
 TESTS_DIR = "tests"
