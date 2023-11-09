@@ -40,35 +40,49 @@ if not input_testcase :
   input_testcase.append(b"")
 
 import time
+env = os.environ.copy()
+# env.update({ 
+#   "PYDEVD_DISABLE_FILE_VALIDATION": "1"
+# })
+
+metadata = []
+streams: list[bytes] = []
 for dir in glob.glob(f"{TESTS_DIR}/*.py") : 
-  for idx, TC in enumerate(input_testcase) :
-    metadata = {
+  for idx, stream in enumerate(input_testcase) :
+    metadata.append(json.dumps({
       "source": dir, 
-      "index": idx
-    }
-    metadata = json.dumps(metadata)
+      "index": idx,
+    }).encode())
+    streams.append(stream)
 
-    env = os.environ.copy()
-    # env.update({ 
-    #   "PYDEVD_DISABLE_FILE_VALIDATION": "1"
-    # })
-    proc = subprocess.Popen(["pypy", "-Xfrozen_modules=off", '-m', "src.wrapper", metadata], stdin=subprocess.PIPE, stdout=subprocess.PIPE, env=env)
-    start_time = time.time()
-    stdout, stderr = proc.communicate(input=TC, timeout=None)
-    elapsed = int((time.time() - start_time) * 1000)
+with subprocess.Popen(
+    ["pypy", "-Xfrozen_modules=off", '-m', "src.wrapper"], 
+    env=env, 
+    stdin=subprocess.PIPE, 
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+  ) as proc :
 
-    parsed = stdout.split(METADATA_SEPARATOR.encode())
-    if stderr :
-      print(bold + red + "[Standard output Error]\n", stderr + reset)
-    elif len(parsed) == 1 :
-      if COMPILE_ERROR_SIGNAL.encode() in parsed[0] :
-        print(red + "[Compile Error]" + reset)
-        print(b"\n".join(stdout.split(b"\n")[1:]).decode())
-      else :
-        print(red + "[Runtime Error]" + reset, sep="\n")
+  while metadata :
+    proc.stdin.write(metadata.pop() + b"\n")
+    proc.stdin.flush()
+
+    proc.stdin.write(streams.pop())
+    proc.stdin.flush()
+
+  stdout, stderr = proc.communicate(input=TC, timeout=None)
+  parsed = stdout.split(METADATA_SEPARATOR.encode())
+  if stderr :
+    print(bold + red + "[Standard output Error]\n", stderr + reset)
+  elif len(parsed) == 1 :
+    if COMPILE_ERROR_SIGNAL.encode() in parsed[0] :
+      print(red + "[Compile Error]" + reset)
+      print(b"\n".join(stdout.split(b"\n")[1:]).decode())
     else :
-      output, result = parsed
-      if output : print(output.decode())
+      print(red + "[Runtime Error]" + reset, sep="\n")
+  else :
+    output, result = parsed
+    # if output : print(output.decode())
 
-      #TODO: judge output and calculate result
-      print(result.decode())
+    #TODO: judge output and calculate result
+    print(result.decode())
