@@ -62,9 +62,8 @@ with subprocess.Popen(
   stderr=subprocess.PIPE,
 ) as proc :
   while metadata :
-    print(metadata, streams)
-    proc.stdin.write(metadata.pop() + b"\n") #input of metadata: find source file's directory and indicates which testcase is it.
-    proc.stdin.flush()
+    proc.stdin.write(metadata.pop() + b"\n")
+    proc.stdin.flush() #IPC의 관점에서, flush()는 데이터를 보내기로 확정하는 것과 같다. git의 commit과 비슷하다.
 
     proc.stdin.write(streams.pop() + b"\n") #input of testcase
     proc.stdin.flush()

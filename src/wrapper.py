@@ -43,6 +43,7 @@ if __name__ == "__main__" :
       before_memory = CURRENT_PROCESS.memory_info()
       start_time = time.time()
       spec.loader.exec_module(module)
+      elapsed = int((time.time() - start_time) * 1000)
     except (SyntaxError, FileNotFoundError) as e : #TODO: add all the cases that can be considered as compile error
       print(COMPILE_ERROR_SIGNAL)
       traceback.print_exc(1) #also prints PEP-657 – Include Fine Grained Error Locations in Tracebacks 
@@ -55,7 +56,6 @@ if __name__ == "__main__" :
     while sys.stdin.tell() : #There's input stream remaining but not processed. Consume all before next testcase.
       sys.stdin.readline()
 
-    elapsed = int((time.time() - start_time) * 1000)
     print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
     after_memory = CURRENT_PROCESS.memory_info()
     del spec, module
