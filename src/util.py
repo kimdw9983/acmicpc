@@ -9,6 +9,7 @@ reset = "\x1b[0m"
 METADATA_SEPARATOR = '\x1e' #record separator
 END_OF_TESTCASE = '\x04' #end of transmission
 COMPILE_ERROR_SIGNAL = '\x1F' #unit separator
+RUNTIME_ERROR_SIGNAL = '\x1D' #group separator
 
 TESTS_DIR = "tests"
 TESTCASE_DIR = "testcases"

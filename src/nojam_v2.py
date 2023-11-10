@@ -35,11 +35,10 @@ for input in glob.glob(f"{TESTCASE_DIR}/*.in") :
 for output in glob.glob(f"{TESTCASE_DIR}/*.out") :
   parse_standard(output, False)
 
-#if there's no input, just put dummy to invoke testcases.
+#if no input testcases, put dummy to test the code anyway.
 if not input_testcase :
   input_testcase.append(b"")
 
-import time
 env = os.environ.copy()
 # env.update({ 
 #   "PYDEVD_DISABLE_FILE_VALIDATION": "1"
@@ -56,33 +55,58 @@ for dir in glob.glob(f"{TESTS_DIR}/*.py") :
     streams.append(stream)
 
 with subprocess.Popen(
-    ["pypy", "-Xfrozen_modules=off", '-m', "src.wrapper"], 
-    env=env, 
-    stdin=subprocess.PIPE, 
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE,
-  ) as proc :
-
+  ["pypy", "-Xfrozen_modules=off", '-m', "src.wrapper"], 
+  env=env, 
+  stdin=subprocess.PIPE, 
+  stdout=subprocess.PIPE,
+  stderr=subprocess.PIPE,
+) as proc :
   while metadata :
-    proc.stdin.write(metadata.pop() + b"\n")
+    print(metadata, streams)
+    proc.stdin.write(metadata.pop() + b"\n") #input of metadata: find source file's directory and indicates which testcase is it.
     proc.stdin.flush()
 
-    proc.stdin.write(streams.pop())
+    proc.stdin.write(streams.pop() + b"\n") #input of testcase
     proc.stdin.flush()
+    
+    error = None
+    result_flag = False
+    result = []
+    errors = []
+    while line := proc.stdout.readline() :
+      match line :
+        case s if s[0] == ord(END_OF_TESTCASE) :
+          break
+        case s if s[0] == ord(METADATA_SEPARATOR) :
+          result_flag = True
+        case s if s[0] == ord(COMPILE_ERROR_SIGNAL) :
+          error = "Compile Error"
+          break
+        case s if s[0] == ord(RUNTIME_ERROR_SIGNAL) :
+          error = "Runtime Error"
+          break
+        case s if error :
+          errors.append(s)
+        case s if result_flag :
+          result.append(s)
+        case s :
+          sys.stdout.write(s.decode())
 
-  stdout, stderr = proc.communicate(input=TC, timeout=None)
-  parsed = stdout.split(METADATA_SEPARATOR.encode())
-  if stderr :
-    print(bold + red + "[Standard output Error]\n", stderr + reset)
-  elif len(parsed) == 1 :
-    if COMPILE_ERROR_SIGNAL.encode() in parsed[0] :
-      print(red + "[Compile Error]" + reset)
-      print(b"\n".join(stdout.split(b"\n")[1:]).decode())
-    else :
-      print(red + "[Runtime Error]" + reset, sep="\n")
-  else :
-    output, result = parsed
-    # if output : print(output.decode())
+    #if input buffer is still remaining, flush it.
+    
+    
+    if error :
+      print(f"{red}[{error}]{reset}")
+      print(b"\n".join(errors).decode())
+    
+    if result : #채점 모드일땐 AC, WA 판단 그 외에는 DONE 출력
+      print(f"{green}[DONE]{reset}", end=" ")
+      print(b"\n".join(result).decode())
 
-    #TODO: judge output and calculate result
-    print(result.decode())
+  # print(f"{green}[INFO]{reset} Testcases are all done. Terminating")
+  proc.terminate()
+  try:
+    proc.wait(timeout=0.2)
+  except subprocess.TimeoutExpired:
+    proc.kill()
+    proc.wait()
