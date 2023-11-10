@@ -1,8 +1,8 @@
 from util import *
 import glob, os, re, json, subprocess
 
-input_testcase = []
-output_testcase = []
+input_testcase: list[bytes] = []
+output_testcase: list[bytes] = []
 def parse_acmicpc(file, is_input) :
   with open(file, 'rb') as f : #parse stream in bytes
     stream = f.read()
@@ -45,7 +45,7 @@ env = os.environ.copy()
 # })
 
 metadata = []
-streams: list[bytes] = []
+streams = []
 for dir in glob.glob(f"{TESTS_DIR}/*.py") : 
   for idx, stream in enumerate(input_testcase) :
     metadata.append(json.dumps({
@@ -53,6 +53,8 @@ for dir in glob.glob(f"{TESTS_DIR}/*.py") :
       "index": idx,
     }).encode())
     streams.append(stream)
+metadata.reverse()
+streams.reverse()
 
 with subprocess.Popen(
   ["python", "-Xfrozen_modules=off", '-m', "src.wrapper"], 

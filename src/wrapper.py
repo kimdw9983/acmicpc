@@ -1,7 +1,6 @@
 from src.util import *
 import json, os, pathlib, psutil, time, io, datetime, traceback
 
-# args = json.loads(sys.argv[1]) #metadata
 # TODO: depend wheather traceback mode or not
 sys.tracebacklimit = 2
 OUTPUT_FNAME=""
@@ -58,7 +57,8 @@ if __name__ == "__main__" :
     print(flush=True)
     print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
     after_memory = CURRENT_PROCESS.memory_info()
-    del spec, module
 
-    print(f'{blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB, {blue}ELAPSED:{reset} {elapsed}ms')
+    print(f'{blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB, {blue}ELAPSED:{reset} {elapsed}ms {blue}FILE:{reset} {source} {blue}TC:{reset} {tc_index}')
     print(END_OF_TESTCASE, flush=True)
+    
+    del sys.modules[fname], fname, module, spec
