@@ -55,7 +55,7 @@ for dir in glob.glob(f"{TESTS_DIR}/*.py") :
     streams.append(stream)
 
 with subprocess.Popen(
-  ["pypy", "-Xfrozen_modules=off", '-m', "src.wrapper"], 
+  ["python", "-Xfrozen_modules=off", '-m', "src.wrapper"], 
   env=env, 
   stdin=subprocess.PIPE, 
   stdout=subprocess.PIPE,
@@ -65,7 +65,7 @@ with subprocess.Popen(
     proc.stdin.write(metadata.pop() + b"\n")
     proc.stdin.flush() #IPC의 관점에서, flush()는 데이터를 보내기로 확정하는 것과 같다. git의 commit과 비슷하다.
 
-    proc.stdin.write(streams.pop() + b"\n") #input of testcase
+    proc.stdin.write(streams.pop() + b"\n")
     proc.stdin.flush()
     
     error = None
@@ -83,16 +83,12 @@ with subprocess.Popen(
           break
         case s if s[0] == ord(RUNTIME_ERROR_SIGNAL) :
           error = "Runtime Error"
-          break
         case s if error :
           errors.append(s)
         case s if result_flag :
           result.append(s)
         case s :
           sys.stdout.write(s.decode())
-
-    #if input buffer is still remaining, flush it.
-    
     
     if error :
       print(f"{red}[{error}]{reset}")

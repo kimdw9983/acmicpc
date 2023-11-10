@@ -4,9 +4,9 @@ import json, os, pathlib, psutil, time, io, datetime, traceback
 # args = json.loads(sys.argv[1]) #metadata
 # TODO: depend wheather traceback mode or not
 sys.tracebacklimit = 2
-default_output_name=""
+OUTPUT_FNAME=""
 
-def fprint(*args, filename=default_output_name, sep=" ", end="\n"): 
+def fprint(*args, filename=OUTPUT_FNAME, sep=" ", end="\n"): 
   with open(sys.path[0] + "output/"+filename, "a+") as f:
     f.write(sep.join(map(str, args)) + end)
 
@@ -25,19 +25,18 @@ __builtins__.get_size = lambda x: sizeof_fmt(get_size(x))
 __builtins__.debug = debug
 
 CURRENT_PROCESS = psutil.Process()
+ABS_PATH = str(pathlib.Path(__file__).parent.parent.resolve())
+PATH = os.path.join(ABS_PATH, TESTS_DIR)
 
 if __name__ == "__main__" :
   while metadata := input() :
     metadata = json.loads(metadata)
     source: str = metadata['source']
-    abspath = str(pathlib.Path(__file__).parent.parent.resolve())
     tc_index = metadata['index']
-    path = os.path.join(abspath, TESTS_DIR)
     fname = source.split("\\")[-1].split(".")[0]
-    default_output_name = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S") + f"_{default_output_name}_TC{tc_index}.txt"
-    spec, module = get_module(fname, os.path.join(path, fname + ".py"))
-
-    if not module: raise Exception("module not found")
+    OUTPUT_FNAME = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S") + f"_{fname}_TC{tc_index}.txt"
+    spec, module = get_module(fname, os.path.join(PATH, fname + ".py"))
+    if not module or not spec: raise Exception("module not found")
 
     try :
       before_memory = CURRENT_PROCESS.memory_info()
@@ -56,6 +55,7 @@ if __name__ == "__main__" :
     while sys.stdin.tell() : #There's input stream remaining but not processed. Consume all before next testcase.
       sys.stdin.readline()
 
+    print(flush=True)
     print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
     after_memory = CURRENT_PROCESS.memory_info()
     del spec, module
