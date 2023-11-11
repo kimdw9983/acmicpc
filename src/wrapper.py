@@ -1,5 +1,5 @@
 from src.util import *
-import json, os, pathlib, psutil, time, io, datetime, traceback
+import json, os, pathlib, psutil, time, io, datetime, traceback, gc
 
 # TODO: depend wheather traceback mode or not
 sys.tracebacklimit = 2
@@ -38,9 +38,10 @@ if __name__ == "__main__" :
     if not module or not spec: raise Exception("module not found")
 
     try :
-      before_memory = CURRENT_PROCESS.memory_info()
       start_time = time.time()
+      before_memory = CURRENT_PROCESS.memory_info()
       spec.loader.exec_module(module)
+      after_memory = CURRENT_PROCESS.memory_info()
       elapsed = int((time.time() - start_time) * 1000)
     except (SyntaxError, FileNotFoundError) as e : #TODO: add all the cases that can be considered as compile error
       print(COMPILE_ERROR_SIGNAL)
@@ -56,7 +57,6 @@ if __name__ == "__main__" :
 
     print(flush=True)
     print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
-    after_memory = CURRENT_PROCESS.memory_info()
 
     print(f'{blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB, {blue}ELAPSED:{reset} {elapsed}ms {blue}FILE:{reset} {source} {blue}TC:{reset} {tc_index}')
     print(END_OF_TESTCASE, flush=True)

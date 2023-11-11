@@ -85,10 +85,10 @@ with subprocess.Popen(
           break
         case s if s[0] == ord(RUNTIME_ERROR_SIGNAL) :
           error = "Runtime Error"
-        case s if error :
-          errors.append(s)
         case s if result_flag :
           result.append(s)
+        case s if error :
+          errors.append(s)
         case s :
           sys.stdout.write(s.decode())
     
