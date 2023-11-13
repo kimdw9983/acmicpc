@@ -105,7 +105,7 @@ with subprocess.Popen(
       print(b"\n".join(errors).decode())
     
     if result : 
-      print(f"{status}", end=" ")
+      print(f"{status} {sys.argv[1]}", end=" ")
       print(b"\n".join(result).decode())
 
   # print(f"{green}[INFO]{reset} Testcases are all done. Terminating")
