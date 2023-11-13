@@ -3,7 +3,7 @@ name = "acmicpc"
 version = "0.1.0"
 description = "VSCode framework for Program Solving on acmicpc.com"
 authors = ["kimdw9983 <kimdw9983@gmail.com>"]
-license = "GNU General Public License v3.0"
+license = "Creative Commons Zero v1.0 Universal"
 readme = "README.md"
 
 [tool.poetry.dependencies]
