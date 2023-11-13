@@ -2,11 +2,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "main",
+      "name": "Run in Python 3.15",
       "type": "python",
       "request": "launch",
       "program": "src/main.py",
-      "args": [],
+      "args": ["python"],
+      "console": "integratedTerminal",
+      "cwd": "",
+    },
+    {
+      "name": "Run in PyPy 7.3.12",
+      "type": "python",
+      "request": "launch",
+      "program": "src/main.py",
+      "args": ["pypy3"],
       "console": "integratedTerminal",
       "cwd": "",
     },

@@ -57,7 +57,7 @@ metadata.reverse()
 streams.reverse()
 
 with subprocess.Popen(
-  ["python", "-Xfrozen_modules=off", '-m', "src.wrapper"], 
+  [sys.argv[1], "-B", "-Xfrozen_modules=off", '-m', "src.wrapper"], 
   env=env, 
   stdin=subprocess.PIPE, 
   stdout=subprocess.PIPE,
@@ -71,6 +71,7 @@ with subprocess.Popen(
     proc.stdin.flush()
     
     error = None
+    warning = set()
     result_flag = False
     result = []
     errors = []
@@ -80,6 +81,8 @@ with subprocess.Popen(
           break
         case s if s[0] == ord(METADATA_SEPARATOR) :
           result_flag = True
+        case s if s[0] == ord(INPUT_NOT_CONSUMED) :
+          warning.add("Input has not fully consumed")
         case s if s[0] == ord(COMPILE_ERROR_SIGNAL) :
           error = "Compile Error"
           break
@@ -92,12 +95,17 @@ with subprocess.Popen(
         case s :
           sys.stdout.write(s.decode())
     
+    status = f"{green}[DONE]{reset}" #(AC, WA, TLE, MLE, RE, CE, IE, OLE, SE)
+    if warning :
+      status = f"{yellow}[WARN]"
+      print(yellow + '\n'.join(warning) + reset)
+
     if error :
-      print(f"{red}[{error}]{reset}")
+      status = f"{red}[FAIL]{reset}"
       print(b"\n".join(errors).decode())
     
-    if result : #채점 모드일땐 AC, WA 판단 그 외에는 DONE 출력
-      print(f"{green}[DONE]{reset}", end=" ")
+    if result : 
+      print(f"{status}", end=" ")
       print(b"\n".join(result).decode())
 
   # print(f"{green}[INFO]{reset} Testcases are all done. Terminating")

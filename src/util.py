@@ -10,6 +10,7 @@ METADATA_SEPARATOR = '\x1e' #record separator
 END_OF_TESTCASE = '\x04' #end of transmission
 COMPILE_ERROR_SIGNAL = '\x1F' #unit separator
 RUNTIME_ERROR_SIGNAL = '\x1D' #group separator
+INPUT_NOT_CONSUMED = '\x1C' #file separator
 
 TESTS_DIR = "tests"
 TESTCASE_DIR = "testcases"

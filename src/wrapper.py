@@ -51,9 +51,15 @@ if __name__ == "__main__" :
     except Exception as e : #probably runtime error
       print(RUNTIME_ERROR_SIGNAL)
       traceback.print_exc(1)
-
+      raise
+    
+    input_consumed = True
     while sys.stdin.tell() : #There's input stream remaining but not processed. Consume all before next testcase.
+      input_consumed = False
       sys.stdin.readline()
+
+    if not input_consumed : 
+      print(INPUT_NOT_CONSUMED)
 
     print(flush=True)
     print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
