@@ -4,17 +4,15 @@ import glob, os, re, json, subprocess
 input_testcase: list[bytes] = []
 output_testcase: list[bytes] = []
 def parse_acmicpc(file, is_input) :
+  res = input_testcase if is_input else output_testcase
   with open(file, 'rb') as f : #parse stream in bytes
     stream = f.read()
     if not stream: return
     pattern = re.compile(rb'(?<!\\)next|^\s*;;.*$', re.MULTILINE)
     TC = pattern.split(stream)
-    TC = [s.lstrip(b'\n') for s in TC if s.lstrip(b'\n')]
+    TC = [s.lstrip() for s in TC if s.lstrip()]
     
-    if is_input :
-      input_testcase.extend(TC)
-    else :
-      output_testcase.extend(TC)
+    res.extend(TC)
 
 for input in glob.glob(f"{TESTCASE_DIR}/input.acmicpc") :
   parse_acmicpc(input, True)
@@ -77,7 +75,7 @@ with subprocess.Popen(
     errors = []
     while line := proc.stdout.readline() :
       match line :
-        case s if s[0] == ord(END_OF_TESTCASE) :
+        case s if ord(END_OF_TESTCASE) in s :
           break
         case s if s[0] == ord(METADATA_SEPARATOR) :
           result_flag = True
@@ -89,9 +87,9 @@ with subprocess.Popen(
         case s if s[0] == ord(RUNTIME_ERROR_SIGNAL) :
           error = "Runtime Error"
         case s if result_flag :
-          result.append(s)
+          result.append(s.rstrip())
         case s if error :
-          errors.append(s)
+          errors.append(s.rstrip())
         case s :
           sys.stdout.write(s.decode())
     

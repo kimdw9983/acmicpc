@@ -3,10 +3,10 @@ import json, os, pathlib, psutil, time, io, datetime, traceback, gc
 
 # TODO: depend wheather traceback mode or not
 sys.tracebacklimit = 2
-OUTPUT_FNAME=""
-
-def fprint(*args, filename=OUTPUT_FNAME, sep=" ", end="\n"): 
-  with open(sys.path[0] + "output/"+filename, "a+") as f:
+def fprint(*args, filename=None, sep=" ", end="\n"): 
+  if not filename:
+    filename = OUTPUT_FNAME
+  with open("output/"+filename, "a+") as f:
     f.write(sep.join(map(str, args)) + end)
 
 class hack_bytesIO(io.BytesIO) :
@@ -54,17 +54,19 @@ if __name__ == "__main__" :
       raise
     
     input_consumed = True
-    while sys.stdin.tell() : #There's input stream remaining but not processed. Consume all before next testcase.
-      input_consumed = False
-      sys.stdin.readline()
+    while sys.stdin.tell() : 
+      #There's input stream remaining but not processed. Consume all before next testcase.
+      # Warn if the remaining input was not a whitespace
+      line = sys.stdin.readline()
+      input_consumed = input_consumed and not line.rstrip()
 
     if not input_consumed : 
       print(INPUT_NOT_CONSUMED)
 
-    print(flush=True)
-    print(METADATA_SEPARATOR) # let judge know trailing data is not going to be judge.
+    print()
+    print(METADATA_SEPARATOR, flush=True) # let judge know trailing data is not going to be judge.
 
-    print(f'{blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB, {blue}ELAPSED:{reset} {elapsed}ms {blue}FILE:{reset} {source} {blue}TC:{reset} {tc_index}')
+    print(f'{blue}FILE:{reset} {source} {blue}TC:{reset} {tc_index} {blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB {blue}ELAPSED:{reset} {elapsed}ms')
     print(END_OF_TESTCASE, flush=True)
     
     del sys.modules[fname], fname, module, spec
