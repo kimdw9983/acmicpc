@@ -62,6 +62,7 @@ if __name__ == "__main__" :
     if sys.stdin.tell() : 
       #There's input stream remaining but not processed. Consume all before next testcase.
       # Warn if the remaining input was not a whitespace
+      # TODO: 반례 - 안읽은게 testcase내의 개행문자일 수 있음
       line = sys.stdin.readline()
       if line.rstrip(): print(INPUT_NOT_CONSUMED)
       sys.stdin.seek(0, os.SEEK_END)
