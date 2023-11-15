@@ -37,36 +37,36 @@ if __name__ == "__main__" :
     spec, module = get_module(fname, os.path.join(PATH, fname + ".py"))
     if not module or not spec: raise Exception("module not found")
 
+    result = []
+    result.append(f"{blue}FILE:{reset} {source}")
+    result.append(f"{blue}TC:{reset} {tc_index}")
     try :
       start_time = time.time()
       before_memory = CURRENT_PROCESS.memory_info()
       spec.loader.exec_module(module)
       after_memory = CURRENT_PROCESS.memory_info()
       elapsed = int((time.time() - start_time) * 1000)
+
+      result.append(f"{blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB")
+      result.append(f"{blue}TIME:{reset} {elapsed}ms")
     except (SyntaxError, FileNotFoundError) as e : #TODO: add all the cases that can be considered as compile error
       print(COMPILE_ERROR_SIGNAL)
-      traceback.print_exc(1) #also prints PEP-657 – Include Fine Grained Error Locations in Tracebacks 
+      traceback.print_exc(1, sys.stdout) #also prints PEP-657 – Include Fine Grained Error Locations in Tracebacks 
     except (SystemExit, OSError) as e : #TODO: capture debugger shutdown(exit Code 0)
       pass
     except Exception as e : #probably runtime error
       print(RUNTIME_ERROR_SIGNAL)
-      traceback.print_exc(1)
+      traceback.print_exc(1, sys.stdout)
       raise
     
-    input_consumed = True
-    while sys.stdin.tell() : 
+    if sys.stdin.tell() : 
       #There's input stream remaining but not processed. Consume all before next testcase.
       # Warn if the remaining input was not a whitespace
       line = sys.stdin.readline()
-      input_consumed = input_consumed and not line.rstrip()
+      if line.rstrip(): print(INPUT_NOT_CONSUMED)
+      sys.stdin.seek(0, os.SEEK_END)
 
-    if not input_consumed : 
-      print(INPUT_NOT_CONSUMED)
-
-    print()
-    print(METADATA_SEPARATOR, flush=True) # let judge know trailing data is not going to be judge.
-
-    print(f'{blue}FILE:{reset} {source} {blue}TC:{reset} {tc_index} {blue}MEMORY:{reset} {(after_memory.rss - before_memory.rss) // 1024}KB {blue}ELAPSED:{reset} {elapsed}ms')
-    print(END_OF_TESTCASE, flush=True)
-    
+    print(METADATA_SEPARATOR)
+    print(" ".join(result))
     del sys.modules[fname], fname, module, spec
+    print(END_OF_TESTCASE)

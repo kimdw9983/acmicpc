@@ -63,10 +63,10 @@ with subprocess.Popen(
 ) as proc :
   while metadata :
     proc.stdin.write(metadata.pop() + b"\n")
-    proc.stdin.flush() #IPC의 관점에서, flush()는 데이터를 보내기로 확정하는 것과 같다. git의 commit과 비슷하다.
-
     proc.stdin.write(streams.pop() + b"\n")
-    proc.stdin.flush()
+    proc.stdin.flush() 
+    #IPC의 관점에서, flush()는 데이터를 보내기로 확정하는 것과 같다. git의 commit과 비슷하다.
+    #터미널에 입력창이 떴을 때 입력을 마치기 전까지 무기한 대기하는 것을 생각하면 된다.
     
     error = None
     warning = set()
@@ -75,7 +75,7 @@ with subprocess.Popen(
     errors = []
     while line := proc.stdout.readline() :
       match line :
-        case s if ord(END_OF_TESTCASE) in s :
+        case s if s[0] == ord(END_OF_TESTCASE) :
           break
         case s if s[0] == ord(METADATA_SEPARATOR) :
           result_flag = True
@@ -83,7 +83,6 @@ with subprocess.Popen(
           warning.add("Input has not fully consumed")
         case s if s[0] == ord(COMPILE_ERROR_SIGNAL) :
           error = "Compile Error"
-          break
         case s if s[0] == ord(RUNTIME_ERROR_SIGNAL) :
           error = "Runtime Error"
         case s if result_flag :
@@ -101,9 +100,10 @@ with subprocess.Popen(
     if error :
       status = f"{red}[FAIL]{reset}"
       print(b"\n".join(errors).decode())
+      print(f"{red}{error}{reset}")
     
     if result : 
-      print(f"{status} {sys.argv[1]}", end=" ")
+      print(f"{status}{reset} {sys.argv[1]}", end=" ")
       print(b"\n".join(result).decode())
 
   # print(f"{green}[INFO]{reset} Testcases are all done. Terminating")
