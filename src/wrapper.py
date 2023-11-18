@@ -15,8 +15,8 @@ class hack_bytesIO(io.BytesIO) :
 io.BytesIO = hack_bytesIO
 
 def debug(*args, **kwargs) :
-  args = [f"{reset}{magenta}"] + list(args) + [reset]
-  print(*args, **kwargs)
+  s = f"{reset}{magenta}{list(args).__repr__()[1:-1]}{reset}"
+  print(s, **kwargs)
 
 __builtins__.fprint = fprint
 __builtins__.size = lambda x: sizeof_fmt(get_size(x))
@@ -60,7 +60,7 @@ if __name__ == "__main__" :
       raise
     
     if sys.stdin.tell() : 
-      #There's input stream remaining but not processed. Consume all before next testcase.
+      # There's input stream remaining but not processed. Consume all before next testcase.
       # Warn if the remaining input was not a whitespace
       # TODO: 반례 - 안읽은게 testcase내의 개행문자일 수 있음
       line = sys.stdin.readline()
