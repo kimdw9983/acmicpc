@@ -3,9 +3,9 @@
 - PS용 예제 입력 자동화 및 유닛 테스트 기능 구현
 - 테스트 케이스별로 자동 채점
 - 다양한 PS 템플릿 배포
+  - 코드 템플릿 중 다수는 [Pyrival](https://github.com/cheran-senthil/PyRival)을 참고합니다.
 
 [![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=kimdw9983)](https://solved.ac/kimdw9983)
-- 코드 템플릿 중 다수는 [Pyrival](https://github.com/cheran-senthil/PyRival)을 참고합니다.
 
 ## 목표
 - 어떤 경우에서도 소스파일의 내용물을 그대로 복사 붙여넣기 한 것이 제출 가능한 코드여야 합니다.
