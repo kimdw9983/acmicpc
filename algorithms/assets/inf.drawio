@@ -1,0 +1,52 @@
+<mxfile host="65bd71144e">
+    <diagram id="EH1cUN0cRYsHdUyZRPYt" name="페이지-1">
+        <mxGraphModel dx="1318" dy="523" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-17" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="110" y="240" width="730" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-10" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry width="730.0000000000001" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="11.9672131147541" y="50" width="706.0655737704919" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-1" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;..., -77777, ..., -2, -1, 0, 1e-18, 1e-9, 1, 2, 3, 3.0003, &lt;font color=&quot;#3399ff&quot;&gt;math.pi&lt;/font&gt;, 4, 777777, 1e9, 1e18, ...&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;verticalAlign=middle;spacingBottom=-30;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="88.55737704918033" y="110" width="557.6721311475411" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-2" value="크기를 비교할 수 있는 집합" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="190.2786885245902" y="60" width="347.0491803278689" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-5" value="-inf" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontColor=#333333;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="19.14754098360656" y="135" width="52.65573770491804" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-8" value="작다" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="59.8360655737705" y="200" width="71.8032786885246" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-9" value="크다" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="598.360655737705" y="200" width="71.8032786885246" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-7" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="jxNMNSsPNqEIulym1xkC-17" source="jxNMNSsPNqEIulym1xkC-8" target="jxNMNSsPNqEIulym1xkC-9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="143.6065573770492" y="171" as="sourcePoint"/>
+                        <mxPoint x="622.2950819672133" y="171" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-11" value="nan" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="71.8032786885246" y="10" width="71.8032786885246" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-12" value="자유롭게 산술 연산을 적용할 수 있는 집합" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="171.13114754098365" y="115" width="384.14754098360663" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-13" value="수학 연산자로 만들 수 있는 표현의 집합" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="190.2786885245902" y="10" width="347.0491803278689" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="jxNMNSsPNqEIulym1xkC-15" value="inf" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontColor=#333333;" parent="jxNMNSsPNqEIulym1xkC-17" vertex="1">
+                    <mxGeometry x="658.1967213114755" y="135" width="52.65573770491804" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
