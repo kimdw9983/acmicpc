@@ -4,6 +4,7 @@
 - 테스트 케이스별로 자동 채점
 - 다양한 PS 템플릿 배포
   - 코드 템플릿 중 다수는 [Pyrival](https://github.com/cheran-senthil/PyRival)을 참고합니다.
+- 아직 배포할 수준으로는 문서화되지 않았습니다. 으아악.
 
 [![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=kimdw9983)](https://solved.ac/kimdw9983)
 
