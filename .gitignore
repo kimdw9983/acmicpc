@@ -192,3 +192,4 @@ test*.py
 .dev
 testcases
 .bkp
+tests/example.py
