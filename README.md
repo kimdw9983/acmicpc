@@ -4,7 +4,6 @@
 - 테스트 케이스별로 자동 채점
 - 다양한 PS 템플릿 배포
   - 코드 템플릿 중 다수는 [Pyrival](https://github.com/cheran-senthil/PyRival)과 [keon/algorithms](https://github.com/keon/algorithms)를 참고했습니다.
-- 아직 배포할 수준으로는 문서화되지 않았습니다. 으아악.
 - 설명을 위해 사용된 이미지들은 출처를 밝히거나, 자체 제작할 예정입니다. 문제가 있다면 알려주세요.
 
 [![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=kimdw9983)](https://solved.ac/kimdw9983)
